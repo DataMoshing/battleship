@@ -1,21 +1,23 @@
-const shipFactory = () => ({
-    length() {
+const shipFactory = () => {
+    let hits = 0;
+    function length() {
         return this.length
-    },
-    hit() {
-        let hits = 0
-        hits += 1
-        console.log(hits)
-        return hits
-    },
-    isSunk() {
-
     }
-})
+    function hit() {
+        hits += 1
+        return hits
+    }
+
+    return { length, hit }
+}
 
 
 const ship = shipFactory()
 ship.length = 3
+console.log(ship.hit())
+console.log(ship.hit())
+console.log(ship.hit())
+
 
 console.log(ship)
 
