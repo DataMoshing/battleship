@@ -468,6 +468,43 @@ function styleTagTransform(css, styleElement) {
 }
 module.exports = styleTagTransform;
 
+/***/ }),
+
+/***/ "./src/ship.js":
+/*!*********************!*\
+  !*** ./src/ship.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ship: () => (/* binding */ ship),
+/* harmony export */   shipFactory: () => (/* binding */ shipFactory)
+/* harmony export */ });
+const shipFactory = () => ({
+    length() {
+        return this.length
+    },
+    hit() {
+        let hits = 0
+        hits += 1
+        console.log(hits)
+        return hits
+    },
+    isSunk() {
+
+    }
+})
+
+
+const ship = shipFactory()
+ship.length = 3
+
+console.log(ship)
+
+
+
+
 /***/ })
 
 /******/ 	});
@@ -551,6 +588,8 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
+/* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
+
 
 
 console.log("123")
