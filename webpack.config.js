@@ -16,7 +16,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                use: ["style-loader", "css-loader"],
             },
         ],
     },
@@ -24,7 +24,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "Webpack App",
             filename: "index.html",
-            template: "src/template.html"
-        })
-    ]
-}
+            template: "src/template.html",
+        }),
+    ],
+};
