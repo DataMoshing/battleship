@@ -481,26 +481,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   ship: () => (/* binding */ ship),
 /* harmony export */   shipFactory: () => (/* binding */ shipFactory)
 /* harmony export */ });
-const shipFactory = () => ({
-    length() {
-        return this.length
-    },
-    hit() {
-        let hits = 0
-        hits += 1
-        console.log(hits)
-        return hits
-    },
-    isSunk() {
+const shipFactory = (shipLength) => {
+    let hits = 0
+    let sunk = false
 
+    function getLength(length) {
+        return length
     }
-})
 
+    function hit() {
+        hits += 1
+        return hits
+    }
 
-const ship = shipFactory()
-ship.length = 3
+    function isSunk() {
+        if (hits >= shipLength) {
+            sunk = true
+            return sunk
+        }
+        sunk = false
+        return sunk
+    }
+    return { getLength, hit, isSunk, shipLength }
+}
 
+const ship = shipFactory(3)
 console.log(ship)
+
 
 
 
@@ -592,7 +599,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-console.log("123")
 })();
 
 /******/ })()
