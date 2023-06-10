@@ -1,8 +1,9 @@
-const shipFactory = () => {
-    let hits = 0;
+const shipFactory = (shipLength) => {
+    let hits = 0
+    let sunk = false
 
-    function length() {
-        return this.length
+    function getLength(length) {
+        return length
     }
 
     function hit() {
@@ -11,16 +12,18 @@ const shipFactory = () => {
     }
 
     function isSunk() {
-        if (this.length === hits) {
-            return true
+        if (hits >= shipLength) {
+            sunk = true
+            return sunk
         }
-        return false
+        sunk = false
+        return sunk
     }
-    return { length, hit, isSunk }
+    return { getLength, hit, isSunk, shipLength }
 }
 
-
-const ship = shipFactory()
-ship.length = 3
+const ship = shipFactory(3)
+console.log(ship)
 
 export { shipFactory, ship }
+
