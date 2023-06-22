@@ -1,20 +1,20 @@
-import { ship } from "../ship"
+import testShip from "../ship"
 
 describe("Ship factory", () => {
     test("should hit ship", () => {
-        ship.hit()
-        expect(ship.hit()).toBe(2)
+        testShip.hit()
+        expect(testShip.hit()).toBe(2)
     })
     test("length of ship", () => {
-        expect(ship.getLength(3)).toBe(3)
+        expect(testShip.getLength(3)).toBe(3)
     })
-    test("ship has not been hit", () => {
-        expect(ship.isSunk()).toBe(false)
+    test("Ship has not been hit", () => {
+        expect(testShip.isSunk()).toBe(false)
     })
-    test("ship has been sunk", () => {
-        ship.hit()
-        ship.hit()
-        ship.hit()
-        expect(ship.isSunk()).toBe(true)
+    test("Ship has been sunk", () => {
+        testShip.hit()
+        testShip.hit()
+        testShip.hit()
+        expect(testShip.isSunk()).toBe(true)
     })
 })
