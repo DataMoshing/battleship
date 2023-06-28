@@ -1,4 +1,4 @@
-import testShip from "../ship"
+import { testShip } from "../ship"
 
 describe("Ship factory", () => {
     test("should hit ship", () => {
