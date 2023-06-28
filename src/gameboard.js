@@ -21,29 +21,26 @@ const Gameboard = () => {
 
     const placeShipsHorizontal = (x, y, ship, direction) => {
         const shipsLength = ship.getLength()
+        const currentBoard = getBoard()
         if (direction === "horizontal") {
             if (y + shipsLength > columns) {
                 console.log("Cannot place ship horizontally, out of bounds.");
                 return false;
             }
-            // Places ship horizontally
-            const currentBoard = getBoard()
-            for (let i = 0; i < shipsLength; i += 1) {
-                for (let j = 0; j < currentBoard.length; j += 1) {
-                    for (let k = 0; k < currentBoard[j].length; k += 1)
-                        if (currentBoard[i][j] === ship.name) {
-                            console.log("Ships cannot overlap!")
-                            return false
-                        }
-                }
-                board[x][y + i] = ship.name
+        }
+        // Places ship horizontally
+        for (let i = 0; i < shipsLength; i += 1) {
+            if (board[x][y + i] !== null) {
+                console.log("Ships cannot overlap!")
+                return false
             }
+            currentBoard[x][y + i] = ship.name
         }
         return true
     }
     const placeShipsVertical = (x, y, ship, direction) => {
         const shipsLength = ship.getLength()
-        // const currentBoard = getBoard()
+        const currentBoard = getBoard()
         if (direction === "vertical") {
             if (x + shipsLength > rows) {
                 console.log("Cannot place ship vertically, out of bounds.")
@@ -52,7 +49,11 @@ const Gameboard = () => {
         }
         // Places ship vertically
         for (let i = 0; i < shipsLength; i += 1) {
-            board[x + i][y] = ship.name;
+            if (board[x][y + i] !== null) {
+                console.log("Ships cannot overlap!")
+                return false
+            }
+            currentBoard[x + i][y] = ship.name
         }
         return true
     }
@@ -85,10 +86,10 @@ gameboard.placeShipsHorizontal(2, 4, testShip, "horizontal")
 gameboard.placeShipsVertical(2, 4, testShip2, "vertical")
 
 // gameboard.receiveAttack(2, 4, testShip2)
-gameboard.receiveAttack(3, 4, testShip2)
-gameboard.receiveAttack(4, 4, testShip2)
-gameboard.receiveAttack(5, 4, testShip2)
-gameboard.receiveAttack(6, 4, testShip2)
+// gameboard.receiveAttack(3, 4, testShip2)
+// gameboard.receiveAttack(4, 4, testShip2)
+// gameboard.receiveAttack(5, 4, testShip2)
+// gameboard.receiveAttack(6, 4, testShip2)
 
 // gameboard.receiveAttack(7, 2, testShip)
 
