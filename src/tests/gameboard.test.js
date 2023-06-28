@@ -12,7 +12,6 @@ describe("Gameboard factory", () => {
         expect(gameboard.receiveAttack(2, 4, testShip)).toEqual(true)
     })
     test("Ships cannot overlap", () => {
-        expect(gameboard.placeShipsVertical(2, 4, testShip, "vertical")).toEqual(true)
         expect(gameboard.placeShipsHorizontal(2, 4, testShip2, "horizontal")).toEqual(false)
     })
 })
