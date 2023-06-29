@@ -6,12 +6,15 @@ describe("Gameboard factory", () => {
         expect(gameboard.getBoard().reduce((acc, column) => acc + column.length, 0)).toBe(100)
     })
     test("Can place ships at specific coordinates", () => {
-        expect(gameboard.placeShipsVertical(2, 4, testShip, "vertical")).toEqual(true)
+        expect(gameboard.placeShipsVertical(1, 4, testShip, "vertical")).toEqual(true)
+    })
+    test("Ships cannot overlap", () => {
+        expect(gameboard.placeShipsHorizontal(1, 4, testShip2, "horizontal")).toEqual(false)
     })
     test("Determine if attack hits ship", () => {
         expect(gameboard.receiveAttack(2, 4, testShip)).toEqual(true)
     })
-    test("Ships cannot overlap", () => {
-        expect(gameboard.placeShipsHorizontal(2, 4, testShip2, "horizontal")).toEqual(false)
+    test("Check if all ships have been sunk", () => {
+        expect(gameboard.allSunk()).toEqual(true)
     })
 })
