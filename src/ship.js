@@ -1,7 +1,6 @@
 const createShip = (shipLength, name) => {
     let hits = 0
     let sunk = false
-
     function getLength() {
         return this.shipLength
     }
@@ -19,11 +18,10 @@ const createShip = (shipLength, name) => {
         sunk = false
         return sunk
     }
-    return { getLength, hit, isSunk, shipLength, name }
+    return { getLength, hit, isSunk, shipLength, name, hits }
 }
 
-const testShip = createShip(3, "boat")
-console.log(testShip)
-
-export default testShip
+const testShip = createShip(3, "Boat")
+const testShip2 = createShip(4, "Boat 2")
+export { testShip, testShip2 }
 
