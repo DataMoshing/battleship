@@ -1,12 +1,13 @@
-import { testShip2, testShip, } from "./ship"
+import { testShip, testShip2 } from "./ship"
 
 const Gameboard = () => {
     const rows = 10
     const columns = 10
     const board = []
     const missedCoord = []
-
+    const shipArr = []
     console.log(board)
+    console.log(shipArr)
     const getBoard = () => [...board]
 
     for (let i = 0; i < rows; i += 1) {
@@ -30,11 +31,12 @@ const Gameboard = () => {
         }
         // Places ship horizontally
         for (let i = 0; i < shipsLength; i += 1) {
-            if (board[x][y + i] !== null) {
+            if (currentBoard[x][y + i] !== null) {
                 console.log("Ships cannot overlap!")
                 return false
             }
             currentBoard[x][y + i] = ship.name
+            shipArr.push(ship)
         }
         return true
     }
@@ -49,21 +51,23 @@ const Gameboard = () => {
         }
         // Places ship vertically
         for (let i = 0; i < shipsLength; i += 1) {
-            if (board[x][y + i] !== null) {
+            if (currentBoard[x][y + i] !== null) {
                 console.log("Ships cannot overlap!")
                 return false
             }
             currentBoard[x + i][y] = ship.name
+            shipArr.push(ship)
         }
         return true
     }
     function receiveAttack(x, y, ship) {
+        const currentBoard = getBoard()
         // If board has coordinate with ship
-        if (board[x][y]) {
+        if (currentBoard[x][y]) {
             // Send hit to ship
             ship.hit()
             // Mark X where ship has been hit
-            board[x][y] = "X"
+            currentBoard[x][y] = "X"
             console.log(`${ship.name} has been hit!`)
             if (ship.isSunk()) {
                 console.log(`${ship.name} has sunk!`)
@@ -73,10 +77,20 @@ const Gameboard = () => {
         // Push missed coordinates to array
         missedCoord.push(x, y)
         console.log(`Attack missed at coordinates: [${x},${y}]`)
-        board[x][y] = "miss"
+        currentBoard[x][y] = "miss"
         return false
     }
-    return { placeShipsVertical, placeShipsHorizontal, getBoard, cellCount, receiveAttack }
+    function allSunk() {
+        shipArr.every((ship) => {
+            if (!ship.isSunk()) {
+                console.log("All ships are not sunk.")
+                return false
+            }
+            return console.log("All ships are sunk!")
+        })
+        return true
+    }
+    return { placeShipsVertical, placeShipsHorizontal, getBoard, cellCount, receiveAttack, allSunk }
 }
 
 
@@ -85,15 +99,15 @@ const gameboard = Gameboard()
 gameboard.placeShipsHorizontal(2, 4, testShip, "horizontal")
 gameboard.placeShipsVertical(2, 4, testShip2, "vertical")
 
-// gameboard.receiveAttack(2, 4, testShip2)
-// gameboard.receiveAttack(3, 4, testShip2)
-// gameboard.receiveAttack(4, 4, testShip2)
+// gameboard.receiveAttack(2, 4, testShip)
+// gameboard.receiveAttack(2, 5, testShip)
+// gameboard.receiveAttack(2, 6, testShip)
 // gameboard.receiveAttack(5, 4, testShip2)
 // gameboard.receiveAttack(6, 4, testShip2)
 
 // gameboard.receiveAttack(7, 2, testShip)
 
-// gameboard.allSunk()
+gameboard.allSunk()
 
 
 
