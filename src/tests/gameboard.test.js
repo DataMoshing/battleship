@@ -11,6 +11,9 @@ describe("Gameboard factory", () => {
     test("Ships cannot overlap", () => {
         expect(gameboard.placeShipsHorizontal(1, 4, testShip2, "horizontal")).toEqual(false)
     })
+    test("Ship cannot be placed outside of board", () => {
+        expect(gameboard.placeShipsHorizontal(2, 10, testShip, "horizontal")).toEqual(false)
+    })
     test("Determine if attack hits ship", () => {
         expect(gameboard.receiveAttack(2, 4, testShip)).toEqual(true)
     })
