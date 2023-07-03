@@ -1,4 +1,4 @@
-import { testShip, testShip2 } from "./ship"
+import Ship from "./ship"
 
 const Gameboard = () => {
     const rows = 10
@@ -6,8 +6,10 @@ const Gameboard = () => {
     const board = []
     const missedCoord = []
     const shipArr = []
+    const attackCoord = []
     console.log(board)
-    console.log(shipArr)
+    console.log(attackCoord)
+
     const getBoard = () => [...board]
 
     for (let i = 0; i < rows; i += 1) {
@@ -20,7 +22,7 @@ const Gameboard = () => {
     // Need to reduce array amount to a single value
     const cellCount = getBoard().reduce((row, col) => row + col.length, 0)
 
-    const placeShipsHorizontal = (x, y, ship, direction) => {
+    const placeHorizontal = (x, y, ship, direction) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
         if (direction === "horizontal") {
@@ -40,7 +42,7 @@ const Gameboard = () => {
         }
         return true
     }
-    const placeShipsVertical = (x, y, ship, direction) => {
+    const placeVertical = (x, y, ship, direction) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
         if (direction === "vertical") {
@@ -63,11 +65,16 @@ const Gameboard = () => {
     function receiveAttack(x, y, ship) {
         const currentBoard = getBoard()
         // If board has coordinate with ship
+        if (currentBoard[x][y] === "X") {
+            console.log("CANNOT HIT SAME SPOT!!1")
+            return false
+        }
         if (currentBoard[x][y]) {
             // Send hit to ship
             ship.hit()
             // Mark X where ship has been hit
             currentBoard[x][y] = "X"
+            attackCoord.push(x, y)
             console.log(`${ship.name} has been hit!`)
             if (ship.isSunk()) {
                 console.log(`${ship.name} has sunk!`)
@@ -90,28 +97,30 @@ const Gameboard = () => {
         })
         return true
     }
-    return { placeShipsVertical, placeShipsHorizontal, getBoard, cellCount, receiveAttack, allSunk }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk }
 }
-
 
 const gameboard = Gameboard()
 
-gameboard.placeShipsHorizontal(2, 4, testShip, "horizontal")
-gameboard.placeShipsVertical(2, 4, testShip2, "vertical")
 
-// gameboard.receiveAttack(2, 4, testShip)
-// gameboard.receiveAttack(2, 5, testShip)
+const testShip = Ship(3, "Boat")
+// const testShip2 = Ship(4, "Boat")
+gameboard.placeHorizontal(2, 4, testShip, "horizontal")
+// gameboard.placeVertical(1, 1, testShip2, "vertical")
+
+gameboard.receiveAttack(2, 4, testShip)
+gameboard.receiveAttack(2, 4, testShip)
 // gameboard.receiveAttack(2, 6, testShip)
-// gameboard.receiveAttack(5, 4, testShip2)
+gameboard.receiveAttack(5, 4, testShip)
 // gameboard.receiveAttack(6, 4, testShip2)
 
 // gameboard.receiveAttack(7, 2, testShip)
 
-gameboard.allSunk()
+// gameboard.allSunk()
 
 
 
-export default gameboard
+export default Gameboard
 
 /* Placing ships vertically 
 In each iteration  board[x + i][y] is assigned the name of the ship (ship.name) The y coordinate stays the same, while the x coordinate is incremented by i each iteration
