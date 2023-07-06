@@ -113,9 +113,9 @@ const gameboard = Gameboard()
 const testShip = Ship(3, "Boat")
 gameboard.placeHorizontal(2, 4, testShip, "horizontal")
 
-gameboard.receiveAttack(2, 4, testShip)
-gameboard.receiveAttack(2, 4, testShip)
-gameboard.receiveAttack(0, 5, testShip)
+gameboard.receiveAttack(2, 4)
+gameboard.receiveAttack(2, 4)
+gameboard.receiveAttack(0, 5)
 
 // gameboard.receiveAttack(5, 4, testShip)
 
