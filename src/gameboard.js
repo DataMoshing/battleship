@@ -4,8 +4,9 @@ const Gameboard = () => {
     const rows = 10
     const columns = 10
     const board = []
-    // const missedCoord = []
+    const missedCoord = []
     const shipArr = []
+    console.log(missedCoord)
     // const attackCoord = []
     console.log(board)
 
@@ -21,9 +22,9 @@ const Gameboard = () => {
             hit,
             get isHit() {
                 if (isHit) {
-                    return "Ship hit!"
+                    return "BLOOP! Miss."
                 }
-                return "BLOOP! Miss."
+                return "Ship hit!"
             }
         }
     }
@@ -79,18 +80,20 @@ const Gameboard = () => {
         return true
     }
     function receiveAttack(x, y) {
-        const currentBoard = getBoard()
         const water = Water()
+        const currentBoard = getBoard()
+
         if (currentBoard[x][y] === "X") {
             console.log("Cannot hit same spot!")
             return false
         }
         if (currentBoard[x][y].hit()) {
-            water.hit()
+            console.log(currentBoard[x][y])
             currentBoard[x][y] = "X"
             console.log(water.isHit)
         } else {
-            currentBoard[x][y] = "miss"
+            water.hit()
+            missedCoord.push(x, y)
             console.log(water.isHit)
         }
         return true
@@ -114,13 +117,18 @@ const testShip = Ship(3, "Boat")
 gameboard.placeHorizontal(2, 4, testShip, "horizontal")
 
 gameboard.receiveAttack(2, 4)
-gameboard.receiveAttack(2, 4)
-gameboard.receiveAttack(0, 5)
+// gameboard.receiveAttack(2, 4)
+gameboard.receiveAttack(0, 0)
+
+
+
+// gameboard.receiveAttack(0, 1)
+// gameboard.receiveAttack(0, 3)
 
 // gameboard.receiveAttack(5, 4, testShip)
 
 
-// gameboard.allSunk()
+gameboard.allSunk()
 
 export default Gameboard
 
