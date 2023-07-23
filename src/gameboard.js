@@ -1,4 +1,4 @@
-import Ship from "./ship"
+// import Ship from "./ship"
 
 const Gameboard = () => {
     const rows = 10
@@ -6,9 +6,7 @@ const Gameboard = () => {
     const board = []
     const missedCoord = []
     const shipArr = []
-    console.log(missedCoord)
-    // const attackCoord = []
-    console.log(board)
+    const attackCoord = []
 
     const getBoard = () => [...board]
 
@@ -42,6 +40,7 @@ const Gameboard = () => {
     const placeHorizontal = (x, y, ship, direction) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
+
         if (direction === "horizontal") {
             if (y + shipsLength > columns) {
                 console.log("Cannot place ship horizontally, out of bounds.");
@@ -88,12 +87,13 @@ const Gameboard = () => {
             return false
         }
         if (currentBoard[x][y].hit()) {
-            console.log(currentBoard[x][y])
+            attackCoord.push(x, y)
             currentBoard[x][y] = "X"
             console.log(water.isHit)
         } else {
             water.hit()
             missedCoord.push(x, y)
+            currentBoard[x][y] = "miss"
             console.log(water.isHit)
         }
         return true
@@ -113,12 +113,12 @@ const Gameboard = () => {
 
 const gameboard = Gameboard()
 
-const testShip = Ship(3, "Boat")
-gameboard.placeHorizontal(2, 4, testShip, "horizontal")
+// const testShip = Ship(3, "Boat")
+// gameboard.placeHorizontal(2, 4, testShip, "horizontal")
 
-gameboard.receiveAttack(2, 4)
 // gameboard.receiveAttack(2, 4)
-gameboard.receiveAttack(0, 0)
+// gameboard.receiveAttack(2, 4)
+// gameboard.receiveAttack(0, 0)
 
 
 
