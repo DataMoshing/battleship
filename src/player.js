@@ -1,6 +1,19 @@
 import Gameboard from "./gameboard"
 import createShip from "./ship"
 
+const createComputer = () => {
+    const computerGameboard = Gameboard()
+    const getCompBoard = computerGameboard.getBoard()
+    console.log(getCompBoard)
+
+    const carrier = createShip(5, "Carrier")
+
+    return { computerGameboard, carrier }
+}
+
+const computer = createComputer()
+
+console.log(computer.carrier)
 const createPlayer = (name) => {
     const getName = () => name
     const gameboard = Gameboard()
@@ -21,31 +34,20 @@ const createPlayer = (name) => {
         gameboard.receiveAttack(x, y)
     }
 
-    const setEnemyBoard = (comp) => comp.gameboard
+    const setEnemyBoard = (comp) => comp.getCompBoard
 
-    const sendAttack = () => { }
+    const sendAttack = (x, y, comp) => {
+        comp.computerGameboard.receiveAttack(x, y)
+    }
 
     return { getName, playerShipHorizontal, playerShipVertical, makeAttack, carrier, getPlayerBoard, setEnemyBoard, sendAttack }
 }
 
+const player = createPlayer("Player1")
+player.setEnemyBoard(computer)
 
-const player = createPlayer("Player")
+player.sendAttack(2, 1, computer)
 player.playerShipHorizontal(3, 4, player.carrier, "horizontal")
 
-const createComputer = () => {
-    const computerGameboard = Gameboard()
-    const getCompBoard = computerGameboard.getBoard()
 
-    console.log(getCompBoard)
-
-    const carrier = createShip(5, "Carrier")
-
-    return { getCompBoard, carrier }
-}
-
-const computer = createComputer()
-
-player.setEnemyBoard(computer)
-player.sendAttack(1, 2, computer)
-
-export { player, computer }
+export { createComputer, createPlayer }
