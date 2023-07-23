@@ -22,7 +22,7 @@ describe("Gameboard factory", () => {
         const testShip = createShip(3, "Boat")
         const gameboard = Gameboard()
         gameboard.placeHorizontal(2, 4, testShip, "horizontal")
-        expect(gameboard.receiveAttack(2, 4, testShip)).toEqual(true)
+        expect(gameboard.receiveAttack(2, 4)).toEqual(true)
     })
     test("Check if all ships have been sunk", () => {
         const gameboard = Gameboard()
@@ -32,7 +32,7 @@ describe("Gameboard factory", () => {
         const testShip = createShip(3, "Boat")
         const gameboard = Gameboard()
         gameboard.placeHorizontal(2, 4, testShip, "horizontal")
-        expect(gameboard.receiveAttack(2, 4, testShip)).toEqual(true)
-        expect(gameboard.receiveAttack(2, 4, testShip)).toEqual(false)
+        expect(gameboard.receiveAttack(2, 4)).toEqual(true)
+        expect(gameboard.receiveAttack(2, 4)).toEqual(false)
     })
 })
