@@ -6,14 +6,24 @@ const createComputer = () => {
     const getCompBoard = computerGameboard.getBoard()
     console.log(getCompBoard)
 
-    const carrier = createShip(5, "Carrier")
+    const placeShipHorizontal = (ship) => {
+        let x;
+        let y;
+        do {
+            x = Math.floor((Math.random() * 10));
+            y = Math.floor((Math.random() * 10));
+        }
+        while
+            (computerGameboard.placeHorizontal(x, y, ship, "horizontal") === false);
+        computerGameboard.placeHorizontal(x, y, ship, "horizontal")
+        return true
+    }
 
-    return { computerGameboard, carrier }
+    const setEnemyBoard = (player) => player.getPlayerBoard
+
+    return { computerGameboard, setEnemyBoard, placeShipHorizontal }
 }
 
-const computer = createComputer()
-
-console.log(computer.carrier)
 const createPlayer = (name) => {
     const getName = () => name
     const gameboard = Gameboard()
@@ -22,11 +32,11 @@ const createPlayer = (name) => {
 
     const carrier = createShip(5, "Carrier")
 
-    const playerShipHorizontal = (x, y, ship, direction) => {
-        gameboard.placeHorizontal(x, y, ship, direction)
+    const placeShipHorizontal = (x, y, ship) => {
+        gameboard.placeHorizontal(x, y, ship)
     }
 
-    const playerShipVertical = (x, y, ship, direction) => {
+    const placeShipVertical = (x, y, ship, direction) => {
         gameboard.placeVertical(x, y, ship, direction)
     }
 
@@ -40,14 +50,18 @@ const createPlayer = (name) => {
         comp.computerGameboard.receiveAttack(x, y)
     }
 
-    return { getName, playerShipHorizontal, playerShipVertical, makeAttack, carrier, getPlayerBoard, setEnemyBoard, sendAttack }
+    return { getName, placeShipHorizontal, placeShipVertical, makeAttack, carrier, getPlayerBoard, setEnemyBoard, sendAttack }
 }
 
+const computer = createComputer()
 const player = createPlayer("Player1")
 player.setEnemyBoard(computer)
+computer.setEnemyBoard(player)
+const testShip = createShip(3, "Boat")
+const testShip2 = createShip(4, "Boat")
 
-player.sendAttack(2, 1, computer)
-player.playerShipHorizontal(3, 4, player.carrier, "horizontal")
-
-
+// player.sendAttack(2, 1, computer)
+player.placeShipHorizontal(3, 4, player.carrier)
+computer.placeShipHorizontal(testShip)
+computer.placeShipHorizontal(testShip2)
 export { createComputer, createPlayer }
