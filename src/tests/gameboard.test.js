@@ -10,18 +10,18 @@ describe("Gameboard factory", () => {
         const testShip = createShip(3, "Boat")
         const testShip2 = createShip(4, "Boat")
         const gameboard = Gameboard()
-        expect(gameboard.placeVertical(1, 4, testShip, "vertical")).toEqual(true)
-        expect(gameboard.placeHorizontal(1, 4, testShip2, "horizontal")).toEqual(false)
+        expect(gameboard.placeVertical(1, 4, testShip)).toEqual(true)
+        expect(gameboard.placeHorizontal(1, 4, testShip2)).toEqual(false)
     })
     test("Ship cannot be placed outside of board", () => {
         const testShip = createShip(3, "Boat")
         const gameboard = Gameboard()
-        expect(gameboard.placeHorizontal(2, 10, testShip, "horizontal")).toEqual(false)
+        expect(gameboard.placeHorizontal(2, 10, testShip)).toEqual(false)
     })
     test("Determine if attack hits ship", () => {
         const testShip = createShip(3, "Boat")
         const gameboard = Gameboard()
-        gameboard.placeHorizontal(2, 4, testShip, "horizontal")
+        gameboard.placeHorizontal(2, 4, testShip)
         expect(gameboard.receiveAttack(2, 4)).toEqual(true)
     })
     test("Check if all ships have been sunk", () => {
@@ -31,7 +31,7 @@ describe("Gameboard factory", () => {
     test("Cannot allow to hit in same spot", () => {
         const testShip = createShip(3, "Boat")
         const gameboard = Gameboard()
-        gameboard.placeHorizontal(2, 4, testShip, "horizontal")
+        gameboard.placeHorizontal(2, 4, testShip)
         expect(gameboard.receiveAttack(2, 4)).toEqual(true)
         expect(gameboard.receiveAttack(2, 4)).toEqual(false)
     })

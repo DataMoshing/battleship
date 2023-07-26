@@ -37,43 +37,40 @@ const Gameboard = () => {
     // Need to reduce array amount to a single value
     const cellCount = getBoard().reduce((row, col) => row + col.length, 0)
 
-    const placeHorizontal = (x, y, ship, direction) => {
+    const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
-        if (direction === "horizontal") {
-            if (y + shipsLength > columns) {
-                console.log("Cannot place ship horizontally, out of bounds.");
-                return false;
-            }
+        if (x + shipsLength > columns) {
+            console.log("Cannot place ship horizontally, out of bounds.");
+            return false;
         }
         // Places ship horizontally
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[x][y + i].type !== "water") {
+            if (currentBoard[y][x + i].type !== "water") {
                 console.log("Ships cannot overlap!")
                 return false
             }
-            currentBoard[x][y + i] = ship
+            currentBoard[y][x + i] = ship.name
             shipArr.push(ship)
         }
         return true
     }
-    const placeVertical = (x, y, ship, direction) => {
+    const placeVertical = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
-        if (direction === "vertical") {
-            if (x + shipsLength > rows) {
-                console.log("Cannot place ship vertically, out of bounds.")
-                return false
-            }
+
+        if (y + shipsLength > rows) {
+            console.log("Cannot place ship vertically, out of bounds.")
+            return false
         }
         // Places ship vertically
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[x][y + i].type !== "water") {
+            if (currentBoard[y + i][x].type !== "water") {
                 console.log("Ships cannot overlap!")
                 return false
             }
-            currentBoard[x + i][y] = ship
+            currentBoard[y + i][x] = ship.name
             shipArr.push(ship)
         }
         return true
