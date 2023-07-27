@@ -1,4 +1,5 @@
 // import Ship from "./ship"
+import createShip from "./ship"
 
 const Gameboard = () => {
     const rows = 10
@@ -47,11 +48,12 @@ const Gameboard = () => {
         }
         // Places ship horizontally
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[y][x + i].type !== "water") {
+            if (currentBoard[x][y + i].type !== "water") {
                 console.log("Ships cannot overlap!")
                 return false
             }
-            currentBoard[y][x + i] = ship.name
+            // Change ship.name back to ship
+            currentBoard[x][y + i] = ship.name
             shipArr.push(ship)
         }
         return true
@@ -66,11 +68,12 @@ const Gameboard = () => {
         }
         // Places ship vertically
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[y + i][x].type !== "water") {
+            if (currentBoard[x + i][y].type !== "water") {
                 console.log("Ships cannot overlap!")
                 return false
             }
-            currentBoard[y + i][x] = ship.name
+            // Change ship.name back to ship
+            currentBoard[x + i][y] = ship.name
             shipArr.push(ship)
         }
         return true
@@ -84,6 +87,7 @@ const Gameboard = () => {
             return false
         }
         if (currentBoard[x][y].hit()) {
+            console.log(currentBoard[x][y])
             attackCoord.push(x, y)
             currentBoard[x][y] = "X"
             console.log(water.isHit)
@@ -92,6 +96,7 @@ const Gameboard = () => {
             missedCoord.push(x, y)
             currentBoard[x][y] = "miss"
             console.log(water.isHit)
+            return false
         }
         return true
     }
@@ -109,23 +114,11 @@ const Gameboard = () => {
 }
 
 const gameboard = Gameboard()
+const testShip = createShip(4, "Boat")
+gameboard.placeVertical(1, 3, testShip)
+gameboard.receiveAttack(1, 8)
 
-// const testShip = Ship(3, "Boat")
-// gameboard.placeHorizontal(2, 4, testShip, "horizontal")
-
-// gameboard.receiveAttack(2, 4)
-// gameboard.receiveAttack(2, 4)
-// gameboard.receiveAttack(0, 0)
-
-
-
-// gameboard.receiveAttack(0, 1)
-// gameboard.receiveAttack(0, 3)
-
-// gameboard.receiveAttack(5, 4, testShip)
-
-
-gameboard.allSunk()
+// gameboard.allSunk()
 
 export default Gameboard
 
