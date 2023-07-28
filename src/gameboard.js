@@ -15,9 +15,7 @@ const Gameboard = () => {
 
     const Water = () => {
         let isHit = false
-        const hit = () => {
-            isHit = true
-        };
+        const hit = () => { isHit = true };
         return {
             type: "water",
             hit,
@@ -114,7 +112,7 @@ const gameboard = Gameboard()
 const testShip = createShip(4, "Boat")
 gameboard.placeVertical(1, 3, testShip)
 gameboard.receiveAttack(1, 3)
-gameboard.receiveAttack(1, 3)
+// gameboard.receiveAttack(1, 3)
 
 // gameboard.allSunk()
 

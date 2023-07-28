@@ -4,8 +4,8 @@ import createShip from "./ship"
 
 const createComputer = () => {
     const computerGameboard = Gameboard()
-    const getCompBoard = computerGameboard.getBoard()
-    console.log(getCompBoard)
+    // const getCompBoard = computerGameboard.getBoard()
+    // console.log(getCompBoard)
 
     const placeShipHorizontal = (ship) => {
         let x;
@@ -41,8 +41,8 @@ const createComputer = () => {
 const createPlayer = (name) => {
     const getName = () => name
     const gameboard = Gameboard()
-    const getPlayerBoard = gameboard.getBoard()
-    console.log(getPlayerBoard)
+    // const getPlayerBoard = gameboard.getBoard()
+    // console.log(getPlayerBoard)
 
     const placeShipHorizontal = (x, y, ship) => {
         gameboard.placeHorizontal(x, y, ship)
@@ -69,10 +69,10 @@ const computer = createComputer()
 const player = createPlayer("Player1")
 player.setEnemyBoard(computer)
 computer.setEnemyBoard(player)
-const testShip = createShip(3, "1")
-const testShip2 = createShip(3, "2")
+// const testShip = createShip(3, "1")
+// const testShip2 = createShip(3, "2")
 
-computer.placeShipVertical(testShip)
-computer.placeShipHorizontal(testShip2)
+// computer.placeShipVertical(testShip)
+// computer.placeShipHorizontal(testShip2)
 
 export { createComputer, createPlayer }

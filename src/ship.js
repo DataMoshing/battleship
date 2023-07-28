@@ -1,6 +1,7 @@
 const createShip = (shipLength, name) => {
     const hits = 0
     let sunk = false
+
     function getLength() {
         return this.shipLength
     }
@@ -18,7 +19,7 @@ const createShip = (shipLength, name) => {
         sunk = false
         return sunk
     }
-    return { getLength, hit, isSunk, shipLength, name, hits }
+    return { getLength, hit, isSunk, shipLength, name, hits, type: "water" }
 }
 
 export default createShip

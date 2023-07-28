@@ -479,6 +479,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
+// import Ship from "./ship"
 
 
 const Gameboard = () => {
@@ -487,78 +488,92 @@ const Gameboard = () => {
     const board = []
     const missedCoord = []
     const shipArr = []
-    console.log(board)
-    console.log(shipArr)
+    const attackCoord = []
+    console.log(attackCoord)
+    console.log(missedCoord)
+
     const getBoard = () => [...board]
+
+    const Water = () => {
+        let isHit = false
+        const hit = () => { isHit = true };
+        return {
+            type: "water",
+            hit,
+            get isHit() {
+                if (isHit) {
+                    return "BLOOP! Miss."
+                }
+                return "Ship hit!"
+            }
+        }
+    }
 
     for (let i = 0; i < rows; i += 1) {
         board[i] = []
         for (let j = 0; j < columns; j += 1) {
-            board[i][j] = null
+            board[i][j] = Water()
         }
     }
 
     // Need to reduce array amount to a single value
     const cellCount = getBoard().reduce((row, col) => row + col.length, 0)
 
-    const placeShipsHorizontal = (x, y, ship, direction) => {
+    const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
-        if (direction === "horizontal") {
-            if (y + shipsLength > columns) {
-                console.log("Cannot place ship horizontally, out of bounds.");
-                return false;
-            }
+
+        if (x + shipsLength > columns) {
+            console.log("Cannot place ship horizontally, out of bounds.");
+            return false;
         }
         // Places ship horizontally
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[x][y + i] !== null) {
+            if (currentBoard[x][y + i].type !== "water") {
                 console.log("Ships cannot overlap!")
                 return false
             }
-            currentBoard[x][y + i] = ship.name
+            // Change ship.name back to ship
+            currentBoard[x][y + i] = ship
             shipArr.push(ship)
         }
         return true
     }
-    const placeShipsVertical = (x, y, ship, direction) => {
+    const placeVertical = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
-        if (direction === "vertical") {
-            if (x + shipsLength > rows) {
-                console.log("Cannot place ship vertically, out of bounds.")
-                return false
-            }
+
+        if (y + shipsLength > rows) {
+            console.log("Cannot place ship vertically, out of bounds.")
+            return false
         }
         // Places ship vertically
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[x][y + i] !== null) {
+            if (currentBoard[x + i][y].type !== "water") {
                 console.log("Ships cannot overlap!")
                 return false
             }
-            currentBoard[x + i][y] = ship.name
+            // Change ship.name back to ship
+            currentBoard[x + i][y] = ship
             shipArr.push(ship)
         }
         return true
     }
-    function receiveAttack(x, y, ship) {
+    function receiveAttack(x, y) {
+        const water = Water()
         const currentBoard = getBoard()
-        // If board has coordinate with ship
-        if (currentBoard[x][y]) {
-            // Send hit to ship
-            ship.hit()
-            // Mark X where ship has been hit
-            currentBoard[x][y] = "X"
-            console.log(`${ship.name} has been hit!`)
-            if (ship.isSunk()) {
-                console.log(`${ship.name} has sunk!`)
-            }
+        console.log(currentBoard)
+
+        if (attackCoord.includes(currentBoard[x][y].hit())) {
+            console.log("Cannot hit same spot!")
+            return false
+        }
+        if (currentBoard[x][y].hit()) {
+            attackCoord.push(x, y)
             return true
         }
-        // Push missed coordinates to array
+        water.hit()
         missedCoord.push(x, y)
-        console.log(`Attack missed at coordinates: [${x},${y}]`)
-        currentBoard[x][y] = "miss"
         return false
     }
     function allSunk() {
@@ -571,28 +586,18 @@ const Gameboard = () => {
         })
         return true
     }
-    return { placeShipsVertical, placeShipsHorizontal, getBoard, cellCount, receiveAttack, allSunk }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk }
 }
 
-
 const gameboard = Gameboard()
+const testShip = (0,_ship__WEBPACK_IMPORTED_MODULE_0__["default"])(4, "Boat")
+gameboard.placeVertical(1, 3, testShip)
+gameboard.receiveAttack(1, 3)
+// gameboard.receiveAttack(1, 3)
 
-gameboard.placeShipsHorizontal(2, 4, _ship__WEBPACK_IMPORTED_MODULE_0__.testShip, "horizontal")
-gameboard.placeShipsVertical(2, 4, _ship__WEBPACK_IMPORTED_MODULE_0__.testShip2, "vertical")
+// gameboard.allSunk()
 
-gameboard.receiveAttack(2, 4, _ship__WEBPACK_IMPORTED_MODULE_0__.testShip)
-gameboard.receiveAttack(2, 5, _ship__WEBPACK_IMPORTED_MODULE_0__.testShip)
-gameboard.receiveAttack(2, 6, _ship__WEBPACK_IMPORTED_MODULE_0__.testShip)
-// gameboard.receiveAttack(5, 4, testShip2)
-// gameboard.receiveAttack(6, 4, testShip2)
-
-// gameboard.receiveAttack(7, 2, testShip)
-
-gameboard.allSunk()
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (gameboard);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Gameboard);
 
 /* Placing ships vertically 
 In each iteration  board[x + i][y] is assigned the name of the ship (ship.name) The y coordinate stays the same, while the x coordinate is incremented by i each iteration
@@ -613,6 +618,100 @@ After these iterations, the ship occupies the cells (2, 4), (3, 4), and (4, 4)
 
 /***/ }),
 
+/***/ "./src/player.js":
+/*!***********************!*\
+  !*** ./src/player.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createComputer: () => (/* binding */ createComputer),
+/* harmony export */   createPlayer: () => (/* binding */ createPlayer)
+/* harmony export */ });
+/* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameboard */ "./src/gameboard.js");
+/* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
+
+
+// import createShip from "./ship"
+
+const createComputer = () => {
+    const computerGameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__["default"])()
+    // const getCompBoard = computerGameboard.getBoard()
+    // console.log(getCompBoard)
+
+    const placeShipHorizontal = (ship) => {
+        let x;
+        let y;
+        do {
+            x = Math.floor((Math.random() * 10));
+            y = Math.floor((Math.random() * 10));
+        }
+        while
+            (computerGameboard.placeHorizontal(x, y, ship, "horizontal") === false);
+        computerGameboard.placeHorizontal(x, y, ship, "horizontal")
+        return true
+    }
+
+    const placeShipVertical = (ship) => {
+        let x;
+        let y;
+        do {
+            x = Math.floor((Math.random() * 10));
+            y = Math.floor((Math.random() * 10));
+        }
+        while
+            (computerGameboard.placeVertical(x, y, ship, "vertical") === false);
+        computerGameboard.placeVertical(x, y, ship, "vertical")
+        return true
+    }
+
+    const setEnemyBoard = (player) => player.getPlayerBoard
+
+    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical }
+}
+
+const createPlayer = (name) => {
+    const getName = () => name
+    const gameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__["default"])()
+    // const getPlayerBoard = gameboard.getBoard()
+    // console.log(getPlayerBoard)
+
+    const placeShipHorizontal = (x, y, ship) => {
+        gameboard.placeHorizontal(x, y, ship)
+    }
+
+    const placeShipVertical = (x, y, ship) => {
+        gameboard.placeVertical(x, y, ship)
+    }
+
+    const makeAttack = (x, y) => {
+        gameboard.receiveAttack(x, y)
+    }
+
+    const setEnemyBoard = (comp) => comp.getCompBoard
+
+    const sendAttack = (x, y, comp) => {
+        comp.computerGameboard.receiveAttack(x, y)
+    }
+
+    return { getName, placeShipHorizontal, placeShipVertical, makeAttack, /* getPlayerBoard, */ setEnemyBoard, sendAttack }
+}
+
+const computer = createComputer()
+const player = createPlayer("Player1")
+player.setEnemyBoard(computer)
+computer.setEnemyBoard(player)
+// const testShip = createShip(3, "1")
+// const testShip2 = createShip(3, "2")
+
+// computer.placeShipVertical(testShip)
+// computer.placeShipHorizontal(testShip2)
+
+
+
+/***/ }),
+
 /***/ "./src/ship.js":
 /*!*********************!*\
   !*** ./src/ship.js ***!
@@ -621,35 +720,33 @@ After these iterations, the ship occupies the cells (2, 4), (3, 4), and (4, 4)
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   testShip: () => (/* binding */ testShip),
-/* harmony export */   testShip2: () => (/* binding */ testShip2)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 const createShip = (shipLength, name) => {
-    let hits = 0
+    const hits = 0
     let sunk = false
+
     function getLength() {
         return this.shipLength
     }
 
     function hit() {
-        hits += 1
-        return hits
+        this.hits += 1
+        return this.hits
     }
 
     function isSunk() {
-        if (hits >= shipLength) {
+        if (this.hits >= this.shipLength) {
             sunk = true
             return sunk
         }
         sunk = false
         return sunk
     }
-    return { getLength, hit, isSunk, shipLength, name, hits }
+    return { getLength, hit, isSunk, shipLength, name, hits, type: "water" }
 }
 
-const testShip = createShip(3, "Boat")
-const testShip2 = createShip(4, "Boat 2")
-
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createShip);
 
 
 
@@ -738,6 +835,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ "./src/style.css");
 /* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
 /* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gameboard */ "./src/gameboard.js");
+/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./player */ "./src/player.js");
 
 
 
