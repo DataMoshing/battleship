@@ -7,7 +7,7 @@ describe("Player factory", () => {
         const testShip = createShip(3, "Boat")
         expect(computer.placeShipHorizontal(testShip)).toEqual(true)
     })
-    test("Computer can randomly place ships verically", () => {
+    test("Computer can randomly place ships vertically", () => {
         const computer = createComputer()
         const testShip = createShip(2, "Boat")
         expect(computer.placeShipVertical(testShip)).toEqual(true)
