@@ -9,7 +9,6 @@ const Gameboard = () => {
     const shipArr = []
     const attackCoord = []
     console.log(attackCoord)
-    console.log(missedCoord)
 
     const getBoard = () => [...board]
 
@@ -78,21 +77,28 @@ const Gameboard = () => {
         }
         return true
     }
+    function isShipHit(x, y) {
+        const coords = [x, y]
+        const coordStr = JSON.stringify(coords)
+        const attackCoordStr = JSON.stringify(attackCoord[0])
+
+        if (coordStr === attackCoordStr) {
+            console.log("Cannot hit same spot")
+            return false
+        }
+        return true
+    }
     function receiveAttack(x, y) {
         const water = Water()
         const currentBoard = getBoard()
-        console.log(currentBoard)
+        // console.log(attackCoord)
 
-        if (attackCoord.includes(currentBoard[x][y].hit())) {
-            console.log("Cannot hit same spot!")
-            return false
-        }
-        if (currentBoard[x][y].hit()) {
-            attackCoord.push(x, y)
+        if (currentBoard[x][y].hit() && isShipHit(x, y)) {
+            attackCoord.push([x, y])
             return true
         }
         water.hit()
-        missedCoord.push(x, y)
+        missedCoord.push([x, y])
         return false
     }
     function allSunk() {
@@ -105,13 +111,19 @@ const Gameboard = () => {
         })
         return true
     }
-    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, isShipHit }
 }
 
 const gameboard = Gameboard()
 const testShip = createShip(4, "Boat")
-gameboard.placeVertical(1, 3, testShip)
-gameboard.receiveAttack(1, 3)
+gameboard.placeVertical(1, 2, testShip)
+gameboard.receiveAttack(1, 2)
+gameboard.receiveAttack(1, 2)
+// gameboard.receiveAttack(2, 2)
+
+
+
+
 // gameboard.receiveAttack(1, 3)
 
 // gameboard.allSunk()
