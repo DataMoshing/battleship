@@ -16,7 +16,8 @@ describe("Gameboard factory", () => {
     test("Ship cannot be placed outside of board", () => {
         const testShip = createShip(3, "Boat")
         const gameboard = Gameboard()
-        expect(gameboard.placeHorizontal(8, 10, testShip)).toEqual(false)
+        gameboard.placeHorizontal(8, 10, testShip)
+        expect(gameboard.validCoords(8, 10)).toEqual(false)
     })
     test("Determine if attack hits ship", () => {
         const testShip = createShip(3, "Boat")

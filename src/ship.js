@@ -19,7 +19,7 @@ const createShip = (shipLength, name) => {
         sunk = false
         return sunk
     }
-    return { getLength, hit, isSunk, shipLength, name, hits, type: "water" }
+    return { getLength, hit, isSunk, shipLength, name, hits, }
 }
 
 export default createShip

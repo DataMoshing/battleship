@@ -5,14 +5,13 @@ import createShip from "./ship"
 const createComputer = () => {
     const computerGameboard = Gameboard()
     // const getCompBoard = computerGameboard.getBoard()
-    // console.log(getCompBoard)
 
     const placeShipHorizontal = (ship) => {
         let x;
         let y;
         do {
-            x = Math.floor((Math.random() * 10));
-            y = Math.floor((Math.random() * 10));
+            x = Math.floor((Math.random() * 9));
+            y = Math.floor((Math.random() * 9));
         }
         while
             (computerGameboard.placeHorizontal(x, y, ship, "horizontal") === false);
@@ -24,12 +23,12 @@ const createComputer = () => {
         let x;
         let y;
         do {
-            x = Math.floor((Math.random() * 10));
-            y = Math.floor((Math.random() * 10));
+            x = Math.floor((Math.random() * 9));
+            y = Math.floor((Math.random() * 9));
         }
         while
-            (computerGameboard.placeVertical(x, y, ship, "vertical") === false);
-        computerGameboard.placeVertical(x, y, ship, "vertical")
+            (computerGameboard.placeVertical(x, y, ship) === false);
+        computerGameboard.placeVertical(x, y, ship)
         return true
     }
 
@@ -69,10 +68,10 @@ const computer = createComputer()
 const player = createPlayer("Player1")
 player.setEnemyBoard(computer)
 computer.setEnemyBoard(player)
-// const testShip = createShip(3, "1")
-// const testShip2 = createShip(3, "2")
+const testShip = createShip(3, "1")
+const testShip2 = createShip(3, "2")
 
-// computer.placeShipVertical(testShip)
-// computer.placeShipHorizontal(testShip2)
+computer.placeShipVertical(testShip)
+computer.placeShipHorizontal(testShip2)
 
 export { createComputer, createPlayer }

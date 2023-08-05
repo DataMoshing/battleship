@@ -8,7 +8,6 @@ const Gameboard = () => {
     const missedCoord = []
     const shipArr = []
     const attackCoord = []
-    console.log(attackCoord)
 
     const getBoard = () => [...board]
 
@@ -37,42 +36,49 @@ const Gameboard = () => {
     // Need to reduce array amount to a single value
     const cellCount = getBoard().reduce((row, col) => row + col.length, 0)
 
+    const validCoords = (x, y) => {
+        if (x < 0) {
+            return false
+        }
+        if (x > 9) {
+            return false
+        }
+        if (y < 0) {
+            return false
+        }
+        if (y > 9) {
+            return false
+        }
+        return true
+    }
+    const getNewCoords = (x, y) => {
+
+    }
     const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
-        if (x + shipsLength > columns) {
-            console.log("Cannot place ship horizontally, out of bounds.");
-            return false;
-        }
-        // Places ship horizontally
+        // Loop through ships length
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[x][y + i].type !== "water") {
-                console.log("Ships cannot overlap!")
-                return false
-            }
             // Change ship.name back to ship
-            currentBoard[x][y + i] = ship
+            currentBoard[x][y + i] = ship.name
             shipArr.push(ship)
         }
         return true
     }
     const placeVertical = (x, y, ship) => {
+        const check = validCoords(x, y)
+        if (!check) {
+            const newXandY = getNewCoords(x, y)
+            return placeVertical(newXandY)
+        }
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
-        if (y + shipsLength > rows) {
-            console.log("Cannot place ship vertically, out of bounds.")
-            return false
-        }
-        // Places ship vertically
+        // Loop through ships length
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[x + i][y].type !== "water") {
-                console.log("Ships cannot overlap!")
-                return false
-            }
             // Change ship.name back to ship
-            currentBoard[x + i][y] = ship
+            currentBoard[x + i][y] = ship.name
             shipArr.push(ship)
         }
         return true
@@ -91,7 +97,6 @@ const Gameboard = () => {
     function receiveAttack(x, y) {
         const water = Water()
         const currentBoard = getBoard()
-        // console.log(attackCoord)
 
         if (currentBoard[x][y].hit() && canShipBeHitAgain(x, y)) {
             attackCoord.push([x, y])
@@ -111,24 +116,13 @@ const Gameboard = () => {
         })
         return true
     }
-    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords }
 }
 
 const gameboard = Gameboard()
-const testShip = createShip(4, "Boat")
-gameboard.placeVertical(1, 2, testShip)
-gameboard.receiveAttack(1, 2)
-gameboard.receiveAttack(1, 2)
-gameboard.receiveAttack(1, 2)
 
-// gameboard.receiveAttack(2, 2)
-
-
-
-
-// gameboard.receiveAttack(1, 3)
-
-// gameboard.allSunk()
+// const testShip = createShip(4, "Boat")
+gameboard.allSunk()
 
 export default Gameboard
 
