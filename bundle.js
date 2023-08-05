@@ -489,8 +489,7 @@ const Gameboard = () => {
     const missedCoord = []
     const shipArr = []
     const attackCoord = []
-    console.log(attackCoord)
-    console.log(missedCoord)
+    // console.log(attackCoord)
 
     const getBoard = () => [...board]
 
@@ -519,61 +518,75 @@ const Gameboard = () => {
     // Need to reduce array amount to a single value
     const cellCount = getBoard().reduce((row, col) => row + col.length, 0)
 
+    const validCoords = (x, y) => {
+        if (x < 0) {
+            return false
+        }
+        if (x > 9) {
+            return false
+        }
+        if (y < 0) {
+            return false
+        }
+        if (y > 9) {
+            return false
+        }
+        return true
+    }
+    const getNewCoords = (x, y) => {
+
+    }
     const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
-        if (x + shipsLength > columns) {
-            console.log("Cannot place ship horizontally, out of bounds.");
-            return false;
-        }
-        // Places ship horizontally
+        // Loop through ships length
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[x][y + i].type !== "water") {
-                console.log("Ships cannot overlap!")
-                return false
-            }
             // Change ship.name back to ship
-            currentBoard[x][y + i] = ship
+            currentBoard[x][y + i] = ship.name
             shipArr.push(ship)
         }
         return true
     }
     const placeVertical = (x, y, ship) => {
+        const check = validCoords(x, y)
+        if (!check) {
+            const newXandY = getNewCoords(x, y)
+            return placeVertical(newXandY)
+        }
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
-        if (y + shipsLength > rows) {
-            console.log("Cannot place ship vertically, out of bounds.")
-            return false
-        }
-        // Places ship vertically
+        // Loop through ships length
         for (let i = 0; i < shipsLength; i += 1) {
-            if (currentBoard[x + i][y].type !== "water") {
-                console.log("Ships cannot overlap!")
-                return false
-            }
             // Change ship.name back to ship
-            currentBoard[x + i][y] = ship
+            currentBoard[x + i][y] = ship.name
             shipArr.push(ship)
+        }
+        return true
+    }
+    function canShipBeHitAgain(x, y) {
+        const coords = [x, y]
+        const coordStr = JSON.stringify(coords)
+        const attackCoordStr = JSON.stringify(attackCoord[0])
+
+        if (coordStr === attackCoordStr) {
+            console.log("Cannot hit same spot!")
+            return false
         }
         return true
     }
     function receiveAttack(x, y) {
         const water = Water()
         const currentBoard = getBoard()
-        console.log(currentBoard)
+        // console.log(attackCoord)
 
-        if (attackCoord.includes(currentBoard[x][y].hit())) {
-            console.log("Cannot hit same spot!")
-            return false
-        }
-        if (currentBoard[x][y].hit()) {
-            attackCoord.push(x, y)
+        if (currentBoard[x][y].hit() && canShipBeHitAgain(x, y)) {
+            attackCoord.push([x, y])
             return true
         }
         water.hit()
-        missedCoord.push(x, y)
+        missedCoord.push([x, y])
         return false
     }
     function allSunk() {
@@ -586,16 +599,13 @@ const Gameboard = () => {
         })
         return true
     }
-    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords }
 }
 
 const gameboard = Gameboard()
-const testShip = (0,_ship__WEBPACK_IMPORTED_MODULE_0__["default"])(4, "Boat")
-gameboard.placeVertical(1, 3, testShip)
-gameboard.receiveAttack(1, 3)
-// gameboard.receiveAttack(1, 3)
 
-// gameboard.allSunk()
+// const testShip = createShip(4, "Boat")
+gameboard.allSunk()
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Gameboard);
 
@@ -637,15 +647,15 @@ __webpack_require__.r(__webpack_exports__);
 
 const createComputer = () => {
     const computerGameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__["default"])()
-    // const getCompBoard = computerGameboard.getBoard()
-    // console.log(getCompBoard)
+    const getCompBoard = computerGameboard.getBoard()
+    console.log(getCompBoard)
 
     const placeShipHorizontal = (ship) => {
         let x;
         let y;
         do {
-            x = Math.floor((Math.random() * 10));
-            y = Math.floor((Math.random() * 10));
+            x = Math.floor((Math.random() * 9));
+            y = Math.floor((Math.random() * 9));
         }
         while
             (computerGameboard.placeHorizontal(x, y, ship, "horizontal") === false);
@@ -657,12 +667,12 @@ const createComputer = () => {
         let x;
         let y;
         do {
-            x = Math.floor((Math.random() * 10));
-            y = Math.floor((Math.random() * 10));
+            x = Math.floor((Math.random() * 9));
+            y = Math.floor((Math.random() * 9));
         }
         while
-            (computerGameboard.placeVertical(x, y, ship, "vertical") === false);
-        computerGameboard.placeVertical(x, y, ship, "vertical")
+            (computerGameboard.placeVertical(x, y, ship) === false);
+        computerGameboard.placeVertical(x, y, ship)
         return true
     }
 
@@ -702,11 +712,11 @@ const computer = createComputer()
 const player = createPlayer("Player1")
 player.setEnemyBoard(computer)
 computer.setEnemyBoard(player)
-// const testShip = createShip(3, "1")
-// const testShip2 = createShip(3, "2")
+const testShip = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "1")
+const testShip2 = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "2")
 
-// computer.placeShipVertical(testShip)
-// computer.placeShipHorizontal(testShip2)
+computer.placeShipVertical(testShip)
+computer.placeShipHorizontal(testShip2)
 
 
 
@@ -743,7 +753,7 @@ const createShip = (shipLength, name) => {
         sunk = false
         return sunk
     }
-    return { getLength, hit, isSunk, shipLength, name, hits, type: "water" }
+    return { getLength, hit, isSunk, shipLength, name, hits, }
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createShip);
