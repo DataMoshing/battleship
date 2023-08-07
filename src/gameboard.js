@@ -1,8 +1,3 @@
-// import Ship from "./ship"
-// import createShip from "./ship"
-
-import createShip from "./ship"
-
 const Gameboard = () => {
     const rows = 10
     const columns = 10
@@ -66,15 +61,32 @@ const Gameboard = () => {
         }
         return true
     }
+    const doShipsCollide = (x, y, ship) => {
+        const shipsLength = ship.getLength()
+        const currentBoard = getBoard()
+        for (let i = 0; i < shipsLength; i += 1) {
+            if (currentBoard[x][y + i].type !== "water") {
+                console.log("Ships cannot overlap!")
+                return false
+            }
+        }
+        for (let i = 0; i < shipsLength; i += 1) {
+            if (currentBoard[x + i][y].type !== "water") {
+                console.log("Ships cannot overlap!")
+                return false
+            }
+        }
+        return true
+    }
     const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
         // Loop through ships length
-        if (validCoords(x, y) && shipIsInbounds(x, y, ship)) {
+        if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
             for (let i = 0; i < shipsLength; i += 1) {
                 // Change ship.name back to ship
-                currentBoard[x][y + i] = ship.name
+                currentBoard[x][y + i] = ship
                 shipArr.push(ship)
             }
             return true
@@ -86,10 +98,10 @@ const Gameboard = () => {
         const currentBoard = getBoard()
 
         // Loop through ships length
-        if (validCoords(x, y) && shipIsInbounds(x, y, ship)) {
+        if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
             for (let i = 0; i < shipsLength; i += 1) {
                 // Change ship.name back to ship
-                currentBoard[x + i][y] = ship.name
+                currentBoard[x + i][y] = ship
                 shipArr.push(ship)
             }
             return true
@@ -129,14 +141,10 @@ const Gameboard = () => {
         })
         return true
     }
-    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide }
 }
 
 const gameboard = Gameboard()
-const testShip = createShip(4, "Boat")
-console.log(gameboard.shipIsInbounds(8, 8, testShip))
-
-// const testShip = createShip(4, "Boat")
 gameboard.allSunk()
 
 export default Gameboard
