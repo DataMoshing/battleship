@@ -1,4 +1,6 @@
 // import Ship from "./ship"
+// import createShip from "./ship"
+
 import createShip from "./ship"
 
 const Gameboard = () => {
@@ -51,37 +53,48 @@ const Gameboard = () => {
         }
         return true
     }
-    const getNewCoords = (x, y) => {
+    const shipIsInbounds = (x, y, ship) => {
+        const shipsLength = ship.getLength()
 
+        if (x + shipsLength > columns) {
+            console.log("Cannot place ship horizontally, out of bounds.");
+            return false;
+        }
+        if (y + shipsLength > rows) {
+            console.log("Cannot place ship vertically, out of bounds.");
+            return false;
+        }
+        return true
     }
     const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
         // Loop through ships length
-        for (let i = 0; i < shipsLength; i += 1) {
-            // Change ship.name back to ship
-            currentBoard[x][y + i] = ship.name
-            shipArr.push(ship)
+        if (validCoords(x, y) && shipIsInbounds(x, y, ship)) {
+            for (let i = 0; i < shipsLength; i += 1) {
+                // Change ship.name back to ship
+                currentBoard[x][y + i] = ship.name
+                shipArr.push(ship)
+            }
+            return true
         }
-        return true
+        return false
     }
     const placeVertical = (x, y, ship) => {
-        const check = validCoords(x, y)
-        if (!check) {
-            const newXandY = getNewCoords(x, y)
-            return placeVertical(newXandY)
-        }
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
         // Loop through ships length
-        for (let i = 0; i < shipsLength; i += 1) {
-            // Change ship.name back to ship
-            currentBoard[x + i][y] = ship.name
-            shipArr.push(ship)
+        if (validCoords(x, y) && shipIsInbounds(x, y, ship)) {
+            for (let i = 0; i < shipsLength; i += 1) {
+                // Change ship.name back to ship
+                currentBoard[x + i][y] = ship.name
+                shipArr.push(ship)
+            }
+            return true
         }
-        return true
+        return false
     }
     function canShipBeHitAgain(x, y) {
         const coords = [x, y]
@@ -116,10 +129,12 @@ const Gameboard = () => {
         })
         return true
     }
-    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds }
 }
 
 const gameboard = Gameboard()
+const testShip = createShip(4, "Boat")
+console.log(gameboard.shipIsInbounds(8, 8, testShip))
 
 // const testShip = createShip(4, "Boat")
 gameboard.allSunk()
