@@ -123,7 +123,7 @@ const Gameboard = () => {
         const water = Water()
         const currentBoard = getBoard()
 
-        if (currentBoard[x][y].hit() && canShipBeHitAgain(x, y)) {
+        if (validCoords(x, y) && currentBoard[x][y].hit() && canShipBeHitAgain(x, y)) {
             attackCoord.push([x, y])
             return true
         }
