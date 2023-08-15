@@ -1,23 +1,32 @@
-import createShip from "./ship";
+import createGame from "./game";
 
-const playerContainer = document.querySelector(".player-container")
-const shipContainer = document.querySelector(".ship-container")
-const cells = document.getElementsByClassName("board-cell")
+const table = document.querySelector(".player-container")
+// const shipContainer = document.querySelector(".ship-container")
+// const cells = document.getElementsByClassName("board-cell")
+const game = createGame()
 
-const columns = 10;
-const rows = 10
 const displayPlayerGrid = () => {
-    for (let i = 0; i < rows; i += 1) {
-        const row = document.createElement("tr")
-        row.classList.add("board-row")
-        playerContainer.append(row)
-        for (let j = 0; j < columns; j += 1) {
+    const board = game.player.playerGameboard.getBoard()
+
+    for (let i = 0; i < board.length; i += 1) {
+        board[i] = []
+        for (let j = 0; j < board.length; j += 1) {
+            // board[i][j] = document.createElement("div")
             const cell = document.createElement("td")
             cell.classList.add("board-cell")
             cell.setAttribute("x", i)
             cell.setAttribute("y", j)
-            row.append(cell)
+            board[i][j] = cell
         }
+    }
+
+    for (let i = 0; i < 10; i += 1) {
+        const row = document.createElement("tr")
+        for (let j = 0; j < 10; j += 1) {
+            row.append(board[i][j])
+        }
+        row.classList.add("board-row")
+        table.append(row)
     }
 }
 
