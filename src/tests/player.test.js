@@ -1,4 +1,4 @@
-import { createComputer } from "../player"
+import { createComputer, createPlayer } from "../player"
 import createShip from "../ship"
 
 describe("Player factory", () => {
@@ -11,5 +11,11 @@ describe("Player factory", () => {
         const computer = createComputer()
         const testShip = createShip(2, "Boat")
         expect(computer.placeShipVertical(testShip)).toEqual(true)
+    })
+    test("Computer can attack player board", () => {
+        const computer = createComputer()
+        const player = createPlayer("Player1")
+        computer.setEnemyBoard(player)
+        expect(computer.sendAttack(player)).toEqual(true)
     })
 })
