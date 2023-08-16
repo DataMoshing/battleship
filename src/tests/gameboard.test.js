@@ -31,6 +31,9 @@ describe("Gameboard factory", () => {
     })
     test("Check if all ships have been sunk", () => {
         const gameboard = Gameboard()
+        const testShip = createShip(1, "Boat")
+        gameboard.placeHorizontal(1, 2, testShip)
+        gameboard.receiveAttack(1, 2)
         expect(gameboard.allSunk()).toEqual(true)
     })
     test("Cannot allow to hit in same spot", () => {
