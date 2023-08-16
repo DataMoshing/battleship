@@ -2,7 +2,8 @@ import createGame from "./game";
 
 const table = document.querySelector(".player-container")
 // const shipContainer = document.querySelector(".ship-container")
-// const cells = document.getElementsByClassName("board-cell")
+const cells = document.getElementsByClassName("board-cell")
+
 const game = createGame()
 
 const displayPlayerGrid = () => {
@@ -11,7 +12,6 @@ const displayPlayerGrid = () => {
     for (let i = 0; i < board.length; i += 1) {
         board[i] = []
         for (let j = 0; j < board.length; j += 1) {
-            // board[i][j] = document.createElement("div")
             const cell = document.createElement("td")
             cell.classList.add("board-cell")
             cell.setAttribute("x", i)
@@ -32,6 +32,20 @@ const displayPlayerGrid = () => {
 
 displayPlayerGrid()
 
+game.computer.placeShipHorizontal(game.carrier)
+game.computer.placeShipVertical(game.battleship)
+game.computer.placeShipHorizontal(game.destroyer)
+game.computer.placeShipHorizontal(game.submarine)
+game.computer.placeShipHorizontal(game.patrolBoat)
+
+
+for (let i = 0; i < cells.length; i += 1) {
+    cells[i].addEventListener("click", (e) => {
+        const xPos = e.currentTarget.getAttribute("x")
+        const yPos = e.currentTarget.getAttribute("y")
+        cells[i].textContent = game.player.sendAttack(xPos, yPos, game.computer)
+    })
+}
 // const carrierDisplay = () => {
 //     const carrier = createShip(5, "Carrier")
 //     const carrierDiv = document.createElement("div")
