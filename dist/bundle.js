@@ -889,7 +889,7 @@ const createComputer = () => {
             y = Math.floor((Math.random() * 9))
         }
         while (player.playerGameboard.receiveAttack(x, y))
-        console.log(player.playerGameboard.receiveAttack(x, y))
+        return true
     }
     return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack }
 }
