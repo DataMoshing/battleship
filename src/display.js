@@ -60,12 +60,6 @@ const createCompDisplay = () => {
 
 createCompDisplay()
 
-game.player.placeShipHorizontal(1, 2, game.carrier)
-// game.computer.placeShipVertical(game.battleship)
-// game.computer.placeShipHorizontal(game.destroyer)
-// game.computer.placeShipHorizontal(game.submarine)
-// game.computer.placeShipHorizontal(game.patrolBoat)
-
 
 const displayPlayerAttk = () => {
     for (let i = 0; i < compCells.length; i += 1) {
@@ -81,6 +75,7 @@ const displayPlayerAttk = () => {
     }
 }
 
+game.player.placeShipHorizontal(1, 2, game.carrier)
 game.computer.placeShipHorizontal(game.carrier)
 game.computer.placeShipVertical(game.battleship)
 
