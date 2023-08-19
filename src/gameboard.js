@@ -4,6 +4,7 @@ const Gameboard = () => {
     const board = []
     const missedCoord = []
     const shipArr = []
+    console.log(shipArr)
     const attackCoord = []
 
     const getBoard = () => [...board]
@@ -123,7 +124,8 @@ const Gameboard = () => {
         const water = Water()
         const currentBoard = getBoard()
 
-        if (validCoords(x, y) && currentBoard[x][y].hit() && canShipBeHitAgain(x, y)) {
+        if (canShipBeHitAgain(x, y) && validCoords(x, y) && currentBoard[x][y].hit()) {
+            console.log(`Hit at coordinates ${[x]},${[y]}`)
             attackCoord.push([x, y])
             return true
         }
@@ -137,15 +139,12 @@ const Gameboard = () => {
                 console.log("All ships are not sunk.")
                 return false
             }
-            return console.log("All ships are sunk!")
+            return false
         })
         return true
     }
     return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide }
 }
-
-const gameboard = Gameboard()
-gameboard.allSunk()
 
 export default Gameboard
 

@@ -4,35 +4,13 @@ const playerContainer = document.querySelector(".player-container")
 const computerContainer = document.querySelector(".computer-container")
 // const shipContainer = document.querySelector(".ship-container")
 const compCells = document.getElementsByClassName("c-board-cell")
+const playerCells = document.getElementsByClassName("p-board-cell")
+
 const game = createGame()
-
-const createCompDisplay = () => {
-    const board = game.player.playerGameboard.getBoard()
-    for (let i = 0; i < board.length; i += 1) {
-        board[i] = []
-        for (let j = 0; j < board.length; j += 1) {
-            const cell = document.createElement("td")
-            cell.classList.add("c-board-cell")
-            cell.setAttribute("x", i)
-            cell.setAttribute("y", j)
-            board[i][j] = cell
-        }
-    }
-
-    for (let i = 0; i < 10; i += 1) {
-        const row = document.createElement("tr")
-        for (let j = 0; j < 10; j += 1) {
-            row.append(board[i][j])
-        }
-        row.classList.add("c-board-row")
-        computerContainer.append(row)
-    }
-}
-
-createCompDisplay()
 
 const createPlayerDisplay = () => {
     const board = game.player.playerGameboard.getBoard()
+
     for (let i = 0; i < board.length; i += 1) {
         board[i] = []
         for (let j = 0; j < board.length; j += 1) {
@@ -56,13 +34,40 @@ const createPlayerDisplay = () => {
 
 createPlayerDisplay()
 
-game.computer.placeShipHorizontal(game.carrier)
-game.computer.placeShipVertical(game.battleship)
-game.computer.placeShipHorizontal(game.destroyer)
-game.computer.placeShipHorizontal(game.submarine)
-game.computer.placeShipHorizontal(game.patrolBoat)
+const createCompDisplay = () => {
+    const board = game.player.playerGameboard.getBoard()
 
-const displayCompAttk = () => {
+    for (let i = 0; i < board.length; i += 1) {
+        board[i] = []
+        for (let j = 0; j < board.length; j += 1) {
+            const cell = document.createElement("td")
+            cell.classList.add("c-board-cell")
+            cell.setAttribute("x", i)
+            cell.setAttribute("y", j)
+            board[i][j] = cell
+        }
+    }
+
+    for (let i = 0; i < 10; i += 1) {
+        const row = document.createElement("tr")
+        for (let j = 0; j < 10; j += 1) {
+            row.append(board[i][j])
+        }
+        row.classList.add("c-board-row")
+        computerContainer.append(row)
+    }
+}
+
+createCompDisplay()
+
+game.player.placeShipHorizontal(1, 2, game.carrier)
+// game.computer.placeShipVertical(game.battleship)
+// game.computer.placeShipHorizontal(game.destroyer)
+// game.computer.placeShipHorizontal(game.submarine)
+// game.computer.placeShipHorizontal(game.patrolBoat)
+
+
+const displayPlayerAttk = () => {
     for (let i = 0; i < compCells.length; i += 1) {
         compCells[i].addEventListener("click", (e) => {
             if (compCells[i].textContent.includes("true" || "false")) {
@@ -76,7 +81,18 @@ const displayCompAttk = () => {
     }
 }
 
+game.computer.placeShipHorizontal(game.carrier)
+game.computer.placeShipVertical(game.battleship)
+
+const displayCompAttk = () => {
+    for (let i = 0; i < playerCells.length; i += 1) {
+        playerCells[i].textContent = game.computer.sendAttack(game.player)
+    }
+}
+
+
 displayCompAttk()
+displayPlayerAttk()
 
 // const carrierDisplay = () => {
 //     const carrier = createShip(5, "Carrier")

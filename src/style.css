@@ -6,38 +6,29 @@
     list-style: none;
 }
 
+/* 
 .main-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-}
-
-.table {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    width: 325px;
-    height: 325px;
-}
-
-.computer-container {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    width: 325px;
-    height: 325px;
-}
-
-/* .cells {
-    border: 1px solid black;
 } */
+
 td {
     border: black solid 1px;
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
 }
 
 tr {
     border: black solid 1px;
+}
 
+.carrier {
+    width: 25px
+}
+
+.carrier-cell {
+    border: black solid 1px;
+    width: 25px;
+    height: 25px;
 }

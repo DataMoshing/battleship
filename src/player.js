@@ -2,7 +2,6 @@ import Gameboard from "./gameboard"
 
 const createComputer = () => {
     const computerGameboard = Gameboard()
-    // const getCompBoard = computerGameboard.getBoard()
 
     const placeShipHorizontal = (ship) => {
         let x;
@@ -14,7 +13,6 @@ const createComputer = () => {
         while
             (computerGameboard.placeHorizontal(x, y, ship) === false);
         computerGameboard.placeHorizontal(x, y, ship)
-        return true
     }
 
     const placeShipVertical = (ship) => {
@@ -27,7 +25,6 @@ const createComputer = () => {
         while
             (computerGameboard.placeVertical(x, y, ship) === false)
         computerGameboard.placeVertical(x, y, ship)
-        return true
     }
 
     const setEnemyBoard = (player) => player.getPlayerBoard
@@ -40,9 +37,8 @@ const createComputer = () => {
             y = Math.floor((Math.random() * 9))
         }
         while (player.playerGameboard.receiveAttack(x, y))
-        return true
+        console.log(player.playerGameboard.receiveAttack(x, y))
     }
-
     return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack }
 }
 
