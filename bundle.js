@@ -21,7 +21,40 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, `* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+/* 
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+} */
+
+td {
+    border: black solid 1px;
+    width: 25px;
+    height: 25px;
+}
+
+tr {
+    border: black solid 1px;
+}
+
+.carrier {
+    width: 25px
+}
+
+.carrier-cell {
+    border: black solid 1px;
+    width: 25px;
+    height: 25px;
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,SAAS;IACT,UAAU;IACV,sBAAsB;IACtB,qBAAqB;IACrB,gBAAgB;AACpB;;AAEA;;;;;GAKG;;AAEH;IACI,uBAAuB;IACvB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI;AACJ;;AAEA;IACI,uBAAuB;IACvB,WAAW;IACX,YAAY;AAChB","sourcesContent":["* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n    text-decoration: none;\n    list-style: none;\n}\n\n/* \n.main-container {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 20px;\n} */\n\ntd {\n    border: black solid 1px;\n    width: 25px;\n    height: 25px;\n}\n\ntr {\n    border: black solid 1px;\n}\n\n.carrier {\n    width: 25px\n}\n\n.carrier-cell {\n    border: black solid 1px;\n    width: 25px;\n    height: 25px;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -468,6 +501,164 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/display.js":
+/*!************************!*\
+  !*** ./src/display.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./src/game.js");
+
+
+const playerContainer = document.querySelector(".player-container")
+const computerContainer = document.querySelector(".computer-container")
+// const shipContainer = document.querySelector(".ship-container")
+const compCells = document.getElementsByClassName("c-board-cell")
+const playerCells = document.getElementsByClassName("p-board-cell")
+
+const game = (0,_game__WEBPACK_IMPORTED_MODULE_0__["default"])()
+
+const createPlayerDisplay = () => {
+    const board = game.player.playerGameboard.getBoard()
+
+    for (let i = 0; i < board.length; i += 1) {
+        board[i] = []
+        for (let j = 0; j < board.length; j += 1) {
+            const cell = document.createElement("td")
+            cell.classList.add("p-board-cell")
+            cell.setAttribute("x", i)
+            cell.setAttribute("y", j)
+            board[i][j] = cell
+        }
+    }
+
+    for (let i = 0; i < 10; i += 1) {
+        const row = document.createElement("tr")
+        for (let j = 0; j < 10; j += 1) {
+            row.append(board[i][j])
+        }
+        row.classList.add("p-board-row")
+        playerContainer.append(row)
+    }
+}
+
+createPlayerDisplay()
+
+const createCompDisplay = () => {
+    const board = game.player.playerGameboard.getBoard()
+
+    for (let i = 0; i < board.length; i += 1) {
+        board[i] = []
+        for (let j = 0; j < board.length; j += 1) {
+            const cell = document.createElement("td")
+            cell.classList.add("c-board-cell")
+            cell.setAttribute("x", i)
+            cell.setAttribute("y", j)
+            board[i][j] = cell
+        }
+    }
+
+    for (let i = 0; i < 10; i += 1) {
+        const row = document.createElement("tr")
+        for (let j = 0; j < 10; j += 1) {
+            row.append(board[i][j])
+        }
+        row.classList.add("c-board-row")
+        computerContainer.append(row)
+    }
+}
+
+createCompDisplay()
+
+game.player.placeShipHorizontal(1, 2, game.carrier)
+// game.computer.placeShipVertical(game.battleship)
+// game.computer.placeShipHorizontal(game.destroyer)
+// game.computer.placeShipHorizontal(game.submarine)
+// game.computer.placeShipHorizontal(game.patrolBoat)
+
+
+const displayPlayerAttk = () => {
+    for (let i = 0; i < compCells.length; i += 1) {
+        compCells[i].addEventListener("click", (e) => {
+            if (compCells[i].textContent.includes("true" || 0)) {
+                return false
+            }
+            const xPos = e.currentTarget.getAttribute("x")
+            const yPos = e.currentTarget.getAttribute("y")
+            compCells[i].textContent = game.player.sendAttack(xPos, yPos, game.computer)
+            return true
+        })
+    }
+}
+
+game.computer.placeShipHorizontal(game.carrier)
+game.computer.placeShipVertical(game.battleship)
+
+const displayCompAttk = () => {
+    for (let i = 0; i < playerCells.length; i += 1) {
+        playerCells[i].textContent = game.computer.sendAttack(game.player)
+    }
+}
+
+
+displayCompAttk()
+displayPlayerAttk()
+
+// const carrierDisplay = () => {
+//     const carrier = createShip(5, "Carrier")
+//     const carrierDiv = document.createElement("div")
+//     carrierDiv.classList.add("carrier")
+//     carrierDiv.setAttribute("draggable", true)
+
+//     for (let i = 0; i < carrier.getLength(); i += 1) {
+//         const carrierCell = document.createElement("div")
+//         carrierCell.classList.add("carrier-cell")
+//         carrierCell.setAttribute("data-index", i)
+//         carrierDiv.append(carrierCell)
+//         shipContainer.append(carrierDiv)
+//     }
+// }
+
+// carrierDisplay()
+
+/***/ }),
+
+/***/ "./src/game.js":
+/*!*********************!*\
+  !*** ./src/game.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
+/* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
+
+
+
+const createGame = () => {
+    const player = (0,_player__WEBPACK_IMPORTED_MODULE_0__.createPlayer)("Player")
+    const computer = (0,_player__WEBPACK_IMPORTED_MODULE_0__.createComputer)()
+
+    const carrier = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(5, "Carrier")
+    const battleship = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(4, "Battleship")
+    const destroyer = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "Destroyer")
+    const submarine = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "Submarine")
+    const patrolBoat = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(2, "Patrol Boat")
+
+    return { player, computer, carrier, battleship, destroyer, submarine, patrolBoat }
+}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createGame);
+
+
+
+/***/ }),
+
 /***/ "./src/gameboard.js":
 /*!**************************!*\
   !*** ./src/gameboard.js ***!
@@ -478,18 +669,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
-// import Ship from "./ship"
-
-
 const Gameboard = () => {
     const rows = 10
     const columns = 10
     const board = []
     const missedCoord = []
     const shipArr = []
+    console.log(shipArr)
     const attackCoord = []
-    // console.log(attackCoord)
 
     const getBoard = () => [...board]
 
@@ -533,37 +720,65 @@ const Gameboard = () => {
         }
         return true
     }
-    const getNewCoords = (x, y) => {
+    const shipIsInbounds = (x, y, ship) => {
+        const shipsLength = ship.getLength()
 
+        if (x + shipsLength > columns) {
+            console.log("Cannot place ship horizontally, out of bounds.");
+            return false;
+        }
+        if (y + shipsLength > rows) {
+            console.log("Cannot place ship vertically, out of bounds.");
+            return false;
+        }
+        return true
+    }
+    const doShipsCollide = (x, y, ship) => {
+        const shipsLength = ship.getLength()
+        const currentBoard = getBoard()
+        for (let i = 0; i < shipsLength; i += 1) {
+            if (currentBoard[x][y + i].type !== "water") {
+                console.log("Ships cannot overlap!")
+                return false
+            }
+        }
+        for (let i = 0; i < shipsLength; i += 1) {
+            if (currentBoard[x + i][y].type !== "water") {
+                console.log("Ships cannot overlap!")
+                return false
+            }
+        }
+        return true
     }
     const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
         // Loop through ships length
-        for (let i = 0; i < shipsLength; i += 1) {
-            // Change ship.name back to ship
-            currentBoard[x][y + i] = ship.name
-            shipArr.push(ship)
+        if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
+            for (let i = 0; i < shipsLength; i += 1) {
+                // Change ship.name back to ship
+                currentBoard[x][y + i] = ship
+                shipArr.push(ship)
+            }
+            return true
         }
-        return true
+        return false
     }
     const placeVertical = (x, y, ship) => {
-        const check = validCoords(x, y)
-        if (!check) {
-            const newXandY = getNewCoords(x, y)
-            return placeVertical(newXandY)
-        }
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
         // Loop through ships length
-        for (let i = 0; i < shipsLength; i += 1) {
-            // Change ship.name back to ship
-            currentBoard[x + i][y] = ship.name
-            shipArr.push(ship)
+        if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
+            for (let i = 0; i < shipsLength; i += 1) {
+                // Change ship.name back to ship
+                currentBoard[x + i][y] = ship
+                shipArr.push(ship)
+            }
+            return true
         }
-        return true
+        return false
     }
     function canShipBeHitAgain(x, y) {
         const coords = [x, y]
@@ -579,9 +794,9 @@ const Gameboard = () => {
     function receiveAttack(x, y) {
         const water = Water()
         const currentBoard = getBoard()
-        // console.log(attackCoord)
 
-        if (currentBoard[x][y].hit() && canShipBeHitAgain(x, y)) {
+        if (canShipBeHitAgain(x, y) && validCoords(x, y) && currentBoard[x][y].hit()) {
+            console.log(`Hit at coordinates ${[x]},${[y]}`)
             attackCoord.push([x, y])
             return true
         }
@@ -595,17 +810,12 @@ const Gameboard = () => {
                 console.log("All ships are not sunk.")
                 return false
             }
-            return console.log("All ships are sunk!")
+            return false
         })
         return true
     }
-    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide }
 }
-
-const gameboard = Gameboard()
-
-// const testShip = createShip(4, "Boat")
-gameboard.allSunk()
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Gameboard);
 
@@ -640,15 +850,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   createPlayer: () => (/* binding */ createPlayer)
 /* harmony export */ });
 /* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameboard */ "./src/gameboard.js");
-/* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
 
-
-// import createShip from "./ship"
 
 const createComputer = () => {
     const computerGameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__["default"])()
-    const getCompBoard = computerGameboard.getBoard()
-    console.log(getCompBoard)
 
     const placeShipHorizontal = (ship) => {
         let x;
@@ -658,65 +863,51 @@ const createComputer = () => {
             y = Math.floor((Math.random() * 9));
         }
         while
-            (computerGameboard.placeHorizontal(x, y, ship, "horizontal") === false);
-        computerGameboard.placeHorizontal(x, y, ship, "horizontal")
-        return true
+            (computerGameboard.placeHorizontal(x, y, ship) === false);
+        computerGameboard.placeHorizontal(x, y, ship)
     }
 
     const placeShipVertical = (ship) => {
-        let x;
-        let y;
+        let x
+        let y
         do {
-            x = Math.floor((Math.random() * 9));
-            y = Math.floor((Math.random() * 9));
+            x = Math.floor((Math.random() * 9))
+            y = Math.floor((Math.random() * 9))
         }
         while
-            (computerGameboard.placeVertical(x, y, ship) === false);
+            (computerGameboard.placeVertical(x, y, ship) === false)
         computerGameboard.placeVertical(x, y, ship)
-        return true
     }
 
     const setEnemyBoard = (player) => player.getPlayerBoard
 
-    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical }
+    const sendAttack = (player) => {
+        let x
+        let y
+        do {
+            x = Math.floor((Math.random() * 9))
+            y = Math.floor((Math.random() * 9))
+        }
+        while (player.playerGameboard.receiveAttack(x, y))
+        console.log(player.playerGameboard.receiveAttack(x, y))
+    }
+    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack }
 }
 
 const createPlayer = (name) => {
     const getName = () => name
-    const gameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__["default"])()
-    // const getPlayerBoard = gameboard.getBoard()
-    // console.log(getPlayerBoard)
+    const playerGameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__["default"])()
 
-    const placeShipHorizontal = (x, y, ship) => {
-        gameboard.placeHorizontal(x, y, ship)
-    }
+    const placeShipHorizontal = (x, y, ship) => playerGameboard.placeHorizontal(x, y, ship)
 
-    const placeShipVertical = (x, y, ship) => {
-        gameboard.placeVertical(x, y, ship)
-    }
-
-    const makeAttack = (x, y) => {
-        gameboard.receiveAttack(x, y)
-    }
+    const placeShipVertical = (x, y, ship) => playerGameboard.placeVertical(x, y, ship)
 
     const setEnemyBoard = (comp) => comp.getCompBoard
 
-    const sendAttack = (x, y, comp) => {
-        comp.computerGameboard.receiveAttack(x, y)
-    }
+    const sendAttack = (x, y, comp) => comp.computerGameboard.receiveAttack(x, y)
 
-    return { getName, placeShipHorizontal, placeShipVertical, makeAttack, /* getPlayerBoard, */ setEnemyBoard, sendAttack }
+    return { getName, placeShipHorizontal, placeShipVertical, setEnemyBoard, sendAttack, playerGameboard }
 }
-
-const computer = createComputer()
-const player = createPlayer("Player1")
-player.setEnemyBoard(computer)
-computer.setEnemyBoard(player)
-const testShip = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "1")
-const testShip2 = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "2")
-
-computer.placeShipVertical(testShip)
-computer.placeShipHorizontal(testShip2)
 
 
 
@@ -846,6 +1037,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
 /* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gameboard */ "./src/gameboard.js");
 /* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./player */ "./src/player.js");
+/* harmony import */ var _display__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./display */ "./src/display.js");
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./game */ "./src/game.js");
+
+
+
 
 
 
