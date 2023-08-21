@@ -4,14 +4,24 @@ const createComputer = () => {
     const computerGameboard = Gameboard()
     // console.log(computerGameboard.attackCoord)
     const arrayOfCoords = []
-    const counter = 0
+    const compAttkCoords = []
+    let counter = 0
 
-    for (let i = 0; i < 10; i += 1) {
-        arrayOfCoords[i] = []
-        for (let j = 0; j < 10; j += 1) {
-            arrayOfCoords[i][j] = [i, j]
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]
         }
     }
+
+    for (let i = 0; i < 10; i += 1) {
+        for (let j = 0; j < 10; j += 1) {
+            arrayOfCoords.push([i, j]);
+        }
+    }
+
+    shuffleArray(arrayOfCoords)
+    console.log(arrayOfCoords[0])
     const placeShipHorizontal = (ship) => {
         let x;
         let y;
@@ -39,20 +49,19 @@ const createComputer = () => {
     const setEnemyBoard = (player) => player.getPlayerBoard
 
     const sendAttack = (player) => {
-        const randomX = Math.floor(Math.random() * 9);
-        const randomY = Math.floor(Math.random() * 9);
+        const randomXCoords = arrayOfCoords[counter][0]
+        const randomYCoords = arrayOfCoords[counter][1]
 
-        const randomXCoords = arrayOfCoords[randomX][0][0]
-        const randomYCoords = arrayOfCoords[randomY][0][0]
+        compAttkCoords.push([randomXCoords, randomYCoords])
 
-        const response = player.playerGameboard.receiveAttack(randomXCoords, randomYCoords);
+        const response = player.playerGameboard.receiveAttack(randomXCoords, randomYCoords)
+        console.log(randomXCoords, randomYCoords);
+        counter += 1;
 
-        return [randomXCoords, randomYCoords, response];
-
-
+        return [randomXCoords, randomYCoords, response]
     }
 
-    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack }
+    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack, arrayOfCoords }
 }
 
 const createPlayer = (name) => {
