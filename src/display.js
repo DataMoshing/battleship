@@ -2,56 +2,56 @@ import createGame from "./game";
 
 const playerContainer = document.querySelector(".player-container")
 const computerContainer = document.querySelector(".computer-container")
-// const shipContainer = document.querySelector(".ship-container")
 const compCells = document.getElementsByClassName("c-board-cell")
-const playerCells = document.getElementsByClassName("p-board-cell")
 
 const game = createGame()
 
 const createPlayerDisplay = () => {
-    const board = game.player.playerGameboard.getBoard()
+    const playerBoard = game.player.playerGameboard.getBoard()
 
-    for (let i = 0; i < board.length; i += 1) {
-        board[i] = []
-        for (let j = 0; j < board.length; j += 1) {
+    for (let i = 0; i < playerBoard.length; i += 1) {
+        playerBoard[i] = []
+        for (let j = 0; j < playerBoard.length; j += 1) {
             const cell = document.createElement("td")
             cell.classList.add("p-board-cell")
             cell.setAttribute("x", i)
             cell.setAttribute("y", j)
-            board[i][j] = cell
+            playerBoard[i][j] = cell
         }
     }
 
     for (let i = 0; i < 10; i += 1) {
         const row = document.createElement("tr")
         for (let j = 0; j < 10; j += 1) {
-            row.append(board[i][j])
+            row.append(playerBoard[i][j])
         }
         row.classList.add("p-board-row")
         playerContainer.append(row)
     }
+    game.player.grid = playerBoard
+    console.log(game.player.grid)
 }
 
 createPlayerDisplay()
 
 const createCompDisplay = () => {
-    const board = game.player.playerGameboard.getBoard()
+    const compBoard = game.computer.computerGameboard.getBoard()
 
-    for (let i = 0; i < board.length; i += 1) {
-        board[i] = []
-        for (let j = 0; j < board.length; j += 1) {
+    for (let i = 0; i < compBoard.length; i += 1) {
+        compBoard[i] = []
+        for (let j = 0; j < compBoard.length; j += 1) {
             const cell = document.createElement("td")
             cell.classList.add("c-board-cell")
             cell.setAttribute("x", i)
             cell.setAttribute("y", j)
-            board[i][j] = cell
+            compBoard[i][j] = cell
         }
     }
 
     for (let i = 0; i < 10; i += 1) {
         const row = document.createElement("tr")
         for (let j = 0; j < 10; j += 1) {
-            row.append(board[i][j])
+            row.append(compBoard[i][j])
         }
         row.classList.add("c-board-row")
         computerContainer.append(row)
@@ -59,7 +59,6 @@ const createCompDisplay = () => {
 }
 
 createCompDisplay()
-
 
 const displayPlayerAttk = () => {
     for (let i = 0; i < compCells.length; i += 1) {
@@ -69,25 +68,32 @@ const displayPlayerAttk = () => {
             }
             const xPos = e.currentTarget.getAttribute("x")
             const yPos = e.currentTarget.getAttribute("y")
-            compCells[i].textContent = game.player.sendAttack(xPos, yPos, game.computer)
+            compCells[i].textContent = game.player.sendAttack(Number(xPos), Number(yPos), game.computer)
             return true
         })
     }
 }
 
-game.player.placeShipHorizontal(1, 2, game.carrier)
+displayPlayerAttk()
+
+game.player.sendAttack(1, 2, game.computer)
+
 game.computer.placeShipHorizontal(game.carrier)
 game.computer.placeShipVertical(game.battleship)
+game.player.placeShipHorizontal(1, 2, game.carrier)
+game.player.placeShipVertical(6, 6, game.battleship)
 
 const displayCompAttk = () => {
-    for (let i = 0; i < playerCells.length; i += 1) {
-        playerCells[i].textContent = game.computer.sendAttack(game.player)
-    }
+    const result = game.computer.sendAttack(game.player)
+
+    const randomX = result[0]
+    const randomY = result[1]
+    const compResult = result[2]
+
+    game.player.grid[randomX][randomY].textContent = compResult
 }
 
-
 displayCompAttk()
-displayPlayerAttk()
 
 // const carrierDisplay = () => {
 //     const carrier = createShip(5, "Carrier")
