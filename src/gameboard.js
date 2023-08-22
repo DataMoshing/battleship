@@ -4,9 +4,7 @@ const Gameboard = () => {
     const board = []
     const missedCoord = []
     const shipArr = []
-    console.log(shipArr)
     const attackCoord = []
-
     const getBoard = () => [...board]
 
     const Water = () => {
@@ -53,11 +51,11 @@ const Gameboard = () => {
         const shipsLength = ship.getLength()
 
         if (x + shipsLength > columns) {
-            console.log("Cannot place ship horizontally, out of bounds.");
+            // console.log("Cannot place ship horizontally, out of bounds.");
             return false;
         }
         if (y + shipsLength > rows) {
-            console.log("Cannot place ship vertically, out of bounds.");
+            // console.log("Cannot place ship vertically, out of bounds.");
             return false;
         }
         return true
@@ -67,13 +65,13 @@ const Gameboard = () => {
         const currentBoard = getBoard()
         for (let i = 0; i < shipsLength; i += 1) {
             if (currentBoard[x][y + i].type !== "water") {
-                console.log("Ships cannot overlap!")
+                // console.log("Ships cannot overlap!")
                 return false
             }
         }
         for (let i = 0; i < shipsLength; i += 1) {
             if (currentBoard[x + i][y].type !== "water") {
-                console.log("Ships cannot overlap!")
+                // console.log("Ships cannot overlap!")
                 return false
             }
         }
@@ -125,8 +123,8 @@ const Gameboard = () => {
         const currentBoard = getBoard()
 
         if (canShipBeHitAgain(x, y) && validCoords(x, y) && currentBoard[x][y].hit()) {
-            console.log(`Hit at coordinates ${[x]},${[y]}`)
             attackCoord.push([x, y])
+            console.log(`Hit at coordinates ${[x]},${[y]}`)
             return true
         }
         water.hit()
@@ -143,7 +141,7 @@ const Gameboard = () => {
         })
         return true
     }
-    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide, attackCoord }
 }
 
 export default Gameboard
