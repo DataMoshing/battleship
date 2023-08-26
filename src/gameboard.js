@@ -5,6 +5,7 @@ const Gameboard = () => {
     const missedCoord = []
     const shipArr = []
     const attackCoord = []
+
     const getBoard = () => [...board]
 
     const Water = () => {
@@ -51,11 +52,9 @@ const Gameboard = () => {
         const shipsLength = ship.getLength()
 
         if (x + shipsLength > columns) {
-            // console.log("Cannot place ship horizontally, out of bounds.");
             return false;
         }
         if (y + shipsLength > rows) {
-            // console.log("Cannot place ship vertically, out of bounds.");
             return false;
         }
         return true
@@ -65,13 +64,11 @@ const Gameboard = () => {
         const currentBoard = getBoard()
         for (let i = 0; i < shipsLength; i += 1) {
             if (currentBoard[x][y + i].type !== "water") {
-                // console.log("Ships cannot overlap!")
                 return false
             }
         }
         for (let i = 0; i < shipsLength; i += 1) {
             if (currentBoard[x + i][y].type !== "water") {
-                // console.log("Ships cannot overlap!")
                 return false
             }
         }
@@ -81,10 +78,8 @@ const Gameboard = () => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
-        // Loop through ships length
         if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
             for (let i = 0; i < shipsLength; i += 1) {
-                // Change ship.name back to ship
                 currentBoard[x][y + i] = ship
                 shipArr.push(ship)
             }
@@ -96,10 +91,8 @@ const Gameboard = () => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
-        // Loop through ships length
         if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
             for (let i = 0; i < shipsLength; i += 1) {
-                // Change ship.name back to ship
                 currentBoard[x + i][y] = ship
                 shipArr.push(ship)
             }
