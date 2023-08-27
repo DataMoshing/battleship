@@ -1,19 +1,38 @@
 import { createComputer, createPlayer } from "./player"
-import createShip from "./ship"
+import DOM from "./display"
 
 const createGame = () => {
     const player = createPlayer("Player")
     const computer = createComputer()
 
-    const carrier = createShip(5, "Carrier")
-    const battleship = createShip(4, "Battleship")
-    const destroyer = createShip(3, "Destroyer")
-    const submarine = createShip(3, "Submarine")
-    const patrolBoat = createShip(2, "Patrol Boat")
+    let isPlayersTurn = true
 
-    return { player, computer, carrier, battleship, destroyer, submarine, patrolBoat }
+    const playerTurn = () => {
+        if (isPlayersTurn) {
+            DOM.displayPlayerAttk()
+        } else {
+            DOM.displayCompAttk()
+        }
+        // Toggle true or false each turn
+        isPlayersTurn = !isPlayersTurn;
+    }
+
+    // Add event listener for the player's attacks
+    // DOM.displayPlayerAttk()
+
+    return { player, computer, playerTurn }
 }
 
+const game = createGame()
 
-export default createGame
+// Function to start the game loop
+const startGameLoop = () => {
+    const interval = setInterval(() => {
+        game.playerTurn()
+    }, 1000)
+    return interval
+};
+
+
+// startGameLoop()
 
