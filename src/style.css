@@ -6,13 +6,6 @@
     list-style: none;
 }
 
-/* 
-.main-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-} */
-
 td {
     border: black solid 1px;
     width: 25px;
@@ -23,12 +16,13 @@ tr {
     border: black solid 1px;
 }
 
-.carrier {
-    width: 25px
-}
-
-.carrier-cell {
-    border: black solid 1px;
-    width: 25px;
-    height: 25px;
+.carrier,
+.battleship,
+.destroyer,
+.submarine,
+.patrol-boat {
+    border: black 1px solid;
+    background-color: rgba(255, 65, 65, 0.685);
+    width: 20px;
+    height: 20px;
 }
