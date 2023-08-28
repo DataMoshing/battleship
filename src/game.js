@@ -1,10 +1,11 @@
 import { createComputer, createPlayer } from "./player"
 import DOM from "./display"
+import createShip from "./ship"
 
 const createGame = () => {
     const player = createPlayer("Player")
     const computer = createComputer()
-
+    const carrier = createShip(5, "carrier")
     let isPlayersTurn = true
 
     const playerTurn = () => {
@@ -20,11 +21,10 @@ const createGame = () => {
     // Add event listener for the player's attacks
     // DOM.displayPlayerAttk()
 
-    return { player, computer, playerTurn }
+    return { player, computer, carrier, playerTurn }
 }
 
 const game = createGame()
-
 // Function to start the game loop
 const startGameLoop = () => {
     const interval = setInterval(() => {
@@ -36,3 +36,4 @@ const startGameLoop = () => {
 
 // startGameLoop()
 
+export default game
