@@ -1,4 +1,5 @@
 import { createComputer, createPlayer } from "./player"
+import createShip from "./ship"
 
 const displayGame = () => {
     const computer = createComputer()
@@ -9,9 +10,16 @@ const displayGame = () => {
     const compCells = document.getElementsByClassName("c-board-cell")
 
     const createPlayerDisplay = () => {
+        const carrier = createShip(5, "carrier")
+        const battleship = createShip(4, "battleship")
+        console.log(battleship)
+        const destroyer = createShip(3, "destroyer")
+        console.log(destroyer)
+        const submarine = createShip(3, "submarine")
+        const patrolBoat = createShip(2, "patrol boat")
+
         const playerBoard = player.playerGameboard.getBoard()
         console.log(playerBoard)
-
         for (let i = 0; i < playerBoard.length; i += 1) {
             playerBoard[i] = []
             for (let j = 0; j < playerBoard.length; j += 1) {
@@ -19,11 +27,38 @@ const displayGame = () => {
                 cell.classList.add("p-board-cell")
                 cell.dataset.x = i
                 cell.dataset.y = j
-                // cell.setAttribute("x", i)
-                // cell.setAttribute("y", j)
                 playerBoard[i][j] = cell
             }
         }
+
+        console.log(player.placeShipHorizontal(7, 0, destroyer))
+        console.log(player.placeShipVertical(3, 1, submarine))
+        console.log(player.placeShipVertical(8, 7, patrolBoat))
+        console.log(player.placeShipHorizontal(0, 2, carrier))
+        console.log(player.placeShipVertical(2, 5, battleship))
+
+
+        playerBoard[0][2].classList.add("carrier")
+        playerBoard[0][3].classList.add("carrier")
+        playerBoard[0][4].classList.add("carrier")
+        playerBoard[0][5].classList.add("carrier")
+        playerBoard[0][6].classList.add("carrier")
+
+        playerBoard[2][5].classList.add("battleship")
+        playerBoard[3][5].classList.add("battleship")
+        playerBoard[4][5].classList.add("battleship")
+        playerBoard[5][5].classList.add("battleship")
+
+        playerBoard[7][0].classList.add("destroyer")
+        playerBoard[7][1].classList.add("destroyer")
+        playerBoard[7][2].classList.add("destroyer")
+
+        playerBoard[3][1].classList.add("submarine")
+        playerBoard[4][1].classList.add("submarine")
+        playerBoard[5][1].classList.add("submarine")
+
+        playerBoard[8][7].classList.add("patrol-boat")
+        playerBoard[9][7].classList.add("patrol-boat")
 
         for (let i = 0; i < 10; i += 1) {
             const row = document.createElement("tr")
@@ -34,7 +69,6 @@ const displayGame = () => {
             playerContainer.append(row)
         }
         player.grid = playerBoard
-        console.log(player.grid)
     }
 
     createPlayerDisplay()
@@ -49,8 +83,6 @@ const displayGame = () => {
                 cell.classList.add("c-board-cell")
                 cell.dataset.x = i
                 cell.dataset.y = j
-                // cell.setAttribute("x", i)
-                // cell.setAttribute("y", j)
                 compBoard[i][j] = cell
             }
         }
@@ -67,6 +99,23 @@ const displayGame = () => {
 
     createCompDisplay()
 
+    const displayCompAttk = () => {
+        const result = computer.sendAttack(player)
+
+        if (isPlayersTurn === true) {
+            return false
+        }
+        if (result) {
+            const randomX = result[0]
+            const randomY = result[1]
+            const compResult = result[2]
+            player.grid[randomX][randomY].textContent = compResult
+            console.log("Computer attacked")
+            isPlayersTurn = true
+            return true
+        }
+        return false
+    }
     const displayPlayerAttk = () => {
         for (let i = 0; i < compCells.length; i += 1) {
             // eslint-disable-next-line no-loop-func
@@ -88,46 +137,12 @@ const displayGame = () => {
         return false
     }
 
-    const displayCompAttk = () => {
-        const result = computer.sendAttack(player)
-
-        if (isPlayersTurn === true) {
-            return false
-        }
-        const randomX = result[0]
-        const randomY = result[1]
-        const compResult = result[2]
-        player.grid[randomX][randomY].textContent = compResult
-        console.log("Computer attacked")
-        isPlayersTurn = true
-        return true
-    }
-    return { createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk }
+    return { createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer }
 }
 
 const DOM = displayGame()
+
+// DOM.carrierDisplay()
+
+
 export default DOM
-
-DOM.displayPlayerAttk()
-
-setTimeout(() => {
-    DOM.displayCompAttk()
-}, 2000);
-
-
-// const carrierDisplay = () => {
-//     const carrier = createShip(5, "Carrier")
-//     const carrierDiv = document.createElement("div")
-//     carrierDiv.classList.add("carrier")
-//     carrierDiv.setAttribute("draggable", true)
-
-//     for (let i = 0; i < carrier.getLength(); i += 1) {
-//         const carrierCell = document.createElement("div")
-//         carrierCell.classList.add("carrier-cell")
-//         carrierCell.setAttribute("data-index", i)
-//         carrierDiv.append(carrierCell)
-//         shipContainer.append(carrierDiv)
-//     }
-// }
-
-// carrierDisplay()
