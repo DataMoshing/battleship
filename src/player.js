@@ -2,6 +2,7 @@ import Gameboard from "./gameboard"
 
 const createComputer = () => {
     const computerGameboard = Gameboard()
+    console.log(computerGameboard.getBoard())
     const arrayOfCoords = []
     const compAttkCoords = []
     let counter = 0
@@ -22,16 +23,17 @@ const createComputer = () => {
     shuffleArray(arrayOfCoords)
 
     const placeShipHorizontal = (ship) => {
-        let x;
-        let y;
+        let x
+        let y
         do {
-            x = Math.floor((Math.random() * 9));
-            y = Math.floor((Math.random() * 9));
+            x = Math.floor((Math.random() * 9))
+            y = Math.floor((Math.random() * 9))
         }
         while
-            (computerGameboard.placeHorizontal(x, y, ship) === false);
-        computerGameboard.placeHorizontal(x, y, ship)
+            (computerGameboard.placeHorizontal(x, y, ship) === false)
+        return true
     }
+
 
     const placeShipVertical = (ship) => {
         let x
@@ -42,7 +44,7 @@ const createComputer = () => {
         }
         while
             (computerGameboard.placeVertical(x, y, ship) === false)
-        computerGameboard.placeVertical(x, y, ship)
+        return true
     }
 
     const setEnemyBoard = (player) => player.getPlayerBoard
@@ -54,18 +56,18 @@ const createComputer = () => {
         compAttkCoords.push([randomXCoords, randomYCoords])
 
         const response = player.playerGameboard.receiveAttack(randomXCoords, randomYCoords)
+
         counter += 1;
 
         return [randomXCoords, randomYCoords, response]
     }
 
-    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack }
+    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack, }
 }
 
 const createPlayer = (name) => {
     const getName = () => name
     const playerGameboard = Gameboard()
-
     const placeShipHorizontal = (x, y, ship) => playerGameboard.placeHorizontal(x, y, ship)
 
     const placeShipVertical = (x, y, ship) => playerGameboard.placeVertical(x, y, ship)
