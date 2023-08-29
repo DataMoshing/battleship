@@ -3,23 +3,27 @@ import createShip from "./ship"
 
 const displayGame = () => {
     const computer = createComputer()
+    console.log(computer)
     const player = createPlayer()
     let isPlayersTurn = true
     const playerContainer = document.querySelector(".player-container")
     const computerContainer = document.querySelector(".computer-container")
     const compCells = document.getElementsByClassName("c-board-cell")
+    const carrier = createShip(5, "Carrier")
+    const battleship = createShip(4, "Battleship")
+    const destroyer = createShip(3, "Destroyer")
+    const submarine = createShip(3, "Submarine")
+    const patrolBoat = createShip(2, "Patrol Boat")
 
     const createPlayerDisplay = () => {
-        const carrier = createShip(5, "carrier")
-        const battleship = createShip(4, "battleship")
-        console.log(battleship)
-        const destroyer = createShip(3, "destroyer")
-        console.log(destroyer)
-        const submarine = createShip(3, "submarine")
-        const patrolBoat = createShip(2, "patrol boat")
-
         const playerBoard = player.playerGameboard.getBoard()
-        console.log(playerBoard)
+
+        player.placeShipHorizontal(0, 2, carrier)
+        player.placeShipVertical(2, 5, battleship)
+        player.placeShipHorizontal(7, 0, destroyer)
+        player.placeShipVertical(3, 1, submarine)
+        player.placeShipVertical(8, 7, patrolBoat)
+
         for (let i = 0; i < playerBoard.length; i += 1) {
             playerBoard[i] = []
             for (let j = 0; j < playerBoard.length; j += 1) {
@@ -30,13 +34,6 @@ const displayGame = () => {
                 playerBoard[i][j] = cell
             }
         }
-
-        console.log(player.placeShipHorizontal(7, 0, destroyer))
-        console.log(player.placeShipVertical(3, 1, submarine))
-        console.log(player.placeShipVertical(8, 7, patrolBoat))
-        console.log(player.placeShipHorizontal(0, 2, carrier))
-        console.log(player.placeShipVertical(2, 5, battleship))
-
 
         playerBoard[0][2].classList.add("carrier")
         playerBoard[0][3].classList.add("carrier")
@@ -75,6 +72,11 @@ const displayGame = () => {
 
     const createCompDisplay = () => {
         const compBoard = computer.computerGameboard.getBoard()
+        computer.placeShipHorizontal(carrier)
+        computer.placeShipVertical(battleship)
+        computer.placeShipHorizontal(destroyer)
+        computer.placeShipVertical(submarine)
+        computer.placeShipVertical(patrolBoat)
 
         for (let i = 0; i < compBoard.length; i += 1) {
             compBoard[i] = []
@@ -95,6 +97,8 @@ const displayGame = () => {
             row.classList.add("c-board-row")
             computerContainer.append(row)
         }
+        computer.grid = compBoard
+        console.log(computer.computerGameboard.getBoard())
     }
 
     createCompDisplay()
@@ -109,8 +113,11 @@ const displayGame = () => {
             const randomX = result[0]
             const randomY = result[1]
             const compResult = result[2]
-            player.grid[randomX][randomY].textContent = compResult
-            console.log("Computer attacked")
+            if (compResult === false) {
+                player.grid[randomX][randomY].classList.add("comp-miss")
+            } else {
+                player.grid[randomX][randomY].classList.add("comp-hit")
+            }
             isPlayersTurn = true
             return true
         }
@@ -126,10 +133,18 @@ const displayGame = () => {
                 if (isPlayersTurn === false) {
                     return false
                 }
-                const xPos = e.currentTarget.getAttribute("x")
-                const yPos = e.currentTarget.getAttribute("y")
-                compCells[i].textContent = player.sendAttack(Number(xPos), Number(yPos), computer)
-                console.log("Player attacked")
+                const xPos = e.currentTarget.getAttribute("data-x")
+                const yPos = e.currentTarget.getAttribute("data-y")
+                // compCells[i].textContent = player.sendAttack
+                //     (Number(xPos), Number(yPos), computer)
+                if (player.sendAttack
+                    (Number(xPos), Number(yPos), computer) === true) {
+                    compCells[i].classList.add("player-hit")
+                }
+                if (player.sendAttack
+                    (Number(xPos), Number(yPos), computer) === false) {
+                    compCells[i].classList.add("player-miss")
+                }
                 isPlayersTurn = false
                 return true
             })
@@ -137,12 +152,9 @@ const displayGame = () => {
         return false
     }
 
-    return { createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer }
+    return { carrier, battleship, destroyer, submarine, patrolBoat, createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer }
 }
 
 const DOM = displayGame()
-
-// DOM.carrierDisplay()
-
 
 export default DOM
