@@ -2,9 +2,12 @@ import Gameboard from "../gameboard"
 import createShip from "../ship"
 
 describe("Gameboard factory", () => {
-    test("Does gameboard have 100 cells", () => {
+    test("Can place ships", () => {
         const gameboard = Gameboard()
-        expect(gameboard.getBoard().reduce((acc, column) => acc + column.length, 0)).toBe(100)
+        const testShip = createShip(3, "Boat")
+        const testShip2 = createShip(1, "Pool Float")
+        expect(gameboard.placeHorizontal(1, 4, testShip)).toEqual(true)
+        expect(gameboard.placeVertical(5, 2, testShip2)).toEqual(true)
     })
     test("Check if coordinates are valid", () => {
         const gameboard = Gameboard()
