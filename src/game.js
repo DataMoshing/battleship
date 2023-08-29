@@ -1,11 +1,11 @@
 import { createComputer, createPlayer } from "./player"
 import DOM from "./display"
-import createShip from "./ship"
+// import createShip from "./ship"
 
 const createGame = () => {
     const player = createPlayer("Player")
     const computer = createComputer()
-    const carrier = createShip(5, "carrier")
+
     let isPlayersTurn = true
 
     const playerTurn = () => {
@@ -15,16 +15,13 @@ const createGame = () => {
             DOM.displayCompAttk()
         }
         // Toggle true or false each turn
-        isPlayersTurn = !isPlayersTurn;
+        isPlayersTurn = !isPlayersTurn
     }
-
-    // Add event listener for the player's attacks
-    // DOM.displayPlayerAttk()
-
-    return { player, computer, carrier, playerTurn }
+    return { player, computer, playerTurn }
 }
 
 const game = createGame()
+
 // Function to start the game loop
 const startGameLoop = () => {
     const interval = setInterval(() => {
@@ -32,7 +29,6 @@ const startGameLoop = () => {
     }, 1000)
     return interval
 };
-
 
 // startGameLoop()
 
