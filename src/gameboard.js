@@ -4,8 +4,7 @@ const Gameboard = () => {
     const board = []
     const missedCoord = []
     const shipArr = []
-    const attackCoord = []
-
+    const attackCoord = new Set()
     const getBoard = () => [...board]
 
     const Water = () => {
@@ -77,7 +76,6 @@ const Gameboard = () => {
     const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
-
         if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
             for (let i = 0; i < shipsLength; i += 1) {
                 currentBoard[x][y + i] = ship
@@ -101,38 +99,33 @@ const Gameboard = () => {
         return false
     }
     function canShipBeHitAgain(x, y) {
-        const coords = [x, y]
-        const coordStr = JSON.stringify(coords)
-        const attackCoordStr = JSON.stringify(attackCoord[0])
+        const coordStr = JSON.stringify([x, y]);
 
-        if (coordStr === attackCoordStr) {
-            console.log("Cannot hit same spot!")
+        if (attackCoord.has(coordStr)) {
+            console.log("Cannot hit the same spot again!");
+            return false;
+        }
+        attackCoord.add(coordStr);
+        return true;
+    }
+
+    function allSunk() {
+        if (shipArr.length === 0) {
             return false
         }
-        return true
+        return shipArr.every((ship) => ship.isSunk())
     }
+
     function receiveAttack(x, y) {
         const water = Water()
         const currentBoard = getBoard()
-
         if (canShipBeHitAgain(x, y) && validCoords(x, y) && currentBoard[x][y].hit()) {
-            attackCoord.push([x, y])
-            console.log(`Hit at coordinates ${[x]},${[y]}`)
+            attackCoord.add([x, y])
             return true
         }
         water.hit()
         missedCoord.push([x, y])
         return false
-    }
-    function allSunk() {
-        shipArr.every((ship) => {
-            if (!ship.isSunk()) {
-                console.log("All ships are not sunk.")
-                return false
-            }
-            return false
-        })
-        return true
     }
     return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide, attackCoord }
 }
