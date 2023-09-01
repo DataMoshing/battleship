@@ -21,4 +21,11 @@ describe("Ship factory", () => {
         testShip.hit()
         expect(testShip.isSunk()).toBe(false)
     })
+    test("Ship can't be hit more than once", () => {
+        const testShip = createShip(2, "Boat")
+        testShip.hit()
+        testShip.hit()
+        testShip.hit()
+        expect(testShip.isSunk()).toBe(false)
+    })
 })
