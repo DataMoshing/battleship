@@ -12,7 +12,7 @@ const createShip = (shipLength, name) => {
     }
 
     function isSunk() {
-        if (this.hits >= this.shipLength) {
+        if (this.hits === this.shipLength) {
             sunk = true
             return sunk
         }
