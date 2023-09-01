@@ -14,6 +14,7 @@ const displayGame = () => {
 
     const createPlayerDisplay = () => {
         const playerBoard = player.playerGameboard.getBoard()
+
         const carrier = createShip(5, "Carrier")
         const battleship = createShip(4, "Battleship")
         const destroyer = createShip(3, "Destroyer")
@@ -74,6 +75,7 @@ const displayGame = () => {
 
     const createCompDisplay = () => {
         const compBoard = computer.computerGameboard.getBoard()
+
         const carrier = createShip(5, "Carrier")
         const battleship = createShip(4, "Battleship")
         const destroyer = createShip(3, "Destroyer")
@@ -110,7 +112,18 @@ const displayGame = () => {
 
     createCompDisplay()
 
+    const displayWinner = () => {
+        if (computer.computerGameboard.allSunk()) {
+            console.log("Computer ships have sunk!")
+        }
+        if (player.playerGameboard.allSunk()) {
+            console.log("Player ships have sunk!")
+        }
+    }
+
     const displayCompAttk = () => {
+        displayWinner()
+
         const result = computer.sendAttack(player)
 
         if (isPlayersTurn === true) {
@@ -131,6 +144,8 @@ const displayGame = () => {
         return false
     }
     const displayPlayerAttk = () => {
+        displayWinner()
+
         for (let i = 0; i < compCells.length; i += 1) {
             // eslint-disable-next-line no-loop-func
             compCells[i].addEventListener("click", (e) => {
@@ -158,7 +173,7 @@ const displayGame = () => {
         return false
     }
 
-    return { createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer }
+    return { createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer, displayWinner }
 }
 
 const DOM = displayGame()
