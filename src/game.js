@@ -19,12 +19,14 @@ const createGame = () => {
     }
     return { player, computer, playerTurn }
 }
-
 const game = createGame()
 
 // Function to start the game loop
 const startGameLoop = () => {
     const interval = setInterval(() => {
+        if (DOM.displayWinner()) {
+            clearInterval(interval)
+        }
         game.playerTurn()
     }, 1000)
     return interval
