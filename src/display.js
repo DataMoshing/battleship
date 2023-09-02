@@ -3,14 +3,16 @@ import createShip from "./ship"
 
 const displayGame = () => {
     const computer = createComputer()
-    console.log(computer.computerGameboard.getBoard())
     const player = createPlayer()
     let isPlayersTurn = true
 
     const playerContainer = document.querySelector(".player-container")
     const computerContainer = document.querySelector(".computer-container")
     const compCells = document.getElementsByClassName("c-board-cell")
-
+    const playerModal = document.querySelector(".player")
+    const closePlayerBtn = document.querySelector(".close-button")
+    const compModal = document.querySelector(".computer")
+    const closeCompButton = document.querySelector(".comp-close-button")
 
     const createPlayerDisplay = () => {
         const playerBoard = player.playerGameboard.getBoard()
@@ -112,17 +114,31 @@ const displayGame = () => {
 
     createCompDisplay()
 
-    const displayWinner = () => {
-        if (computer.computerGameboard.allSunk()) {
-            console.log("Computer ships have sunk!")
-        }
-        if (player.playerGameboard.allSunk()) {
-            console.log("Player ships have sunk!")
-        }
+    const togglePlayerModal = () => {
+        playerModal.classList.toggle("show-player")
     }
 
+    const toggleCompModal = () => {
+        compModal.classList.toggle("show-computer")
+    }
+
+    const gameOver = () => {
+        if (computer.computerGameboard.allSunk()) {
+            togglePlayerModal()
+            return true
+        }
+        if (player.playerGameboard.allSunk()) {
+            toggleCompModal()
+            return true
+        }
+        return false
+    }
+
+    closePlayerBtn.addEventListener("click", togglePlayerModal)
+    closeCompButton.addEventListener("click", toggleCompModal)
+
     const displayCompAttk = () => {
-        displayWinner()
+        gameOver()
 
         const result = computer.sendAttack(player)
 
@@ -144,7 +160,7 @@ const displayGame = () => {
         return false
     }
     const displayPlayerAttk = () => {
-        displayWinner()
+        gameOver()
 
         for (let i = 0; i < compCells.length; i += 1) {
             // eslint-disable-next-line no-loop-func
@@ -173,7 +189,7 @@ const displayGame = () => {
         return false
     }
 
-    return { createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer, displayWinner }
+    return { createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer, gameOver }
 }
 
 const DOM = displayGame()
