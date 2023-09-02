@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap);"]);
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `* {
     margin: 0;
@@ -29,12 +30,28 @@ ___CSS_LOADER_EXPORT___.push([module.id, `* {
     list-style: none;
 }
 
-/* 
-.main-container {
+body {
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+img {
+    width: 45px;
+    height: 45px;
+}
+
+.game-title {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-} */
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    text-decoration: underline;
+    margin-bottom: 1rem;
+}
+
+.main-container {
+    display: grid;
+    justify-content: center;
+}
 
 td {
     border: black solid 1px;
@@ -46,15 +63,110 @@ tr {
     border: black solid 1px;
 }
 
-.carrier {
-    width: 25px
+.carrier,
+.battleship,
+.destroyer,
+.submarine,
+.patrol-boat {
+    border: black 1px solid;
+    background-color: rgba(145, 145, 145, 0.685);
+    width: 20px;
+    height: 20px;
 }
 
-.carrier-cell {
-    border: black solid 1px;
-    width: 25px;
-    height: 25px;
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;IACI,SAAS;IACT,UAAU;IACV,sBAAsB;IACtB,qBAAqB;IACrB,gBAAgB;AACpB;;AAEA;;;;;GAKG;;AAEH;IACI,uBAAuB;IACvB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;IACI;AACJ;;AAEA;IACI,uBAAuB;IACvB,WAAW;IACX,YAAY;AAChB","sourcesContent":["* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n    text-decoration: none;\n    list-style: none;\n}\n\n/* \n.main-container {\n    display: flex;\n    flex-wrap: wrap;\n    gap: 20px;\n} */\n\ntd {\n    border: black solid 1px;\n    width: 25px;\n    height: 25px;\n}\n\ntr {\n    border: black solid 1px;\n}\n\n.carrier {\n    width: 25px\n}\n\n.carrier-cell {\n    border: black solid 1px;\n    width: 25px;\n    height: 25px;\n}"],"sourceRoot":""}]);
+.player-miss,
+.comp-miss {
+    background-color: rgb(133, 255, 179);
+}
+
+.player-hit,
+.comp-hit {
+    background-color: rgb(255, 133, 133)
+}
+
+.player,
+.computer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal-content,
+.computer-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 24rem;
+    border-radius: 0.5rem;
+}
+
+.close-button,
+.comp-close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+}
+
+.close-button:hover {
+    background-color: darkgray;
+}
+
+.show-player,
+.show-computer {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+#startBtn {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+/* CSS */
+#startBtn {
+    background-color: #7df565;
+    border: 0 solid #e2e8f0;
+    box-sizing: border-box;
+    color: #0d172a;
+    cursor: pointer;
+    /* display: inline-block; */
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 1rem 5.7rem;
+    text-align: center;
+    text-decoration: none #0d172a solid;
+    text-decoration-thickness: auto;
+    transition: all .1s cubic-bezier(.4, 0, .2, 1);
+    box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+#startBtn:hover {
+    background-color: #70e259;
+    color: black;
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAEA;IACI,SAAS;IACT,UAAU;IACV,sBAAsB;IACtB,qBAAqB;IACrB,gBAAgB;AACpB;;AAEA;IACI,uCAAuC;AAC3C;;AAEA;IACI,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,eAAe;IACf,0BAA0B;IAC1B,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;IACvB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;;;;;IAKI,uBAAuB;IACvB,4CAA4C;IAC5C,WAAW;IACX,YAAY;AAChB;;AAEA;;IAEI,oCAAoC;AACxC;;AAEA;;IAEI;AACJ;;AAEA;;IAEI,eAAe;IACf,OAAO;IACP,MAAM;IACN,WAAW;IACX,YAAY;IACZ,oCAAoC;IACpC,UAAU;IACV,kBAAkB;IAClB,qBAAqB;IACrB,yEAAyE;AAC7E;;AAEA;;IAEI,kBAAkB;IAClB,QAAQ;IACR,SAAS;IACT,gCAAgC;IAChC,uBAAuB;IACvB,oBAAoB;IACpB,YAAY;IACZ,qBAAqB;AACzB;;AAEA;;IAEI,YAAY;IACZ,aAAa;IACb,mBAAmB;IACnB,kBAAkB;IAClB,eAAe;IACf,sBAAsB;IACtB,2BAA2B;AAC/B;;AAEA;IACI,0BAA0B;AAC9B;;AAEA;;IAEI,UAAU;IACV,mBAAmB;IACnB,qBAAqB;IACrB,sEAAsE;AAC1E;;AAEA;IACI,kBAAkB;IAClB,gCAAgC;IAChC,QAAQ;IACR,SAAS;AACb;;AAEA,QAAQ;AACR;IACI,yBAAyB;IACzB,uBAAuB;IACvB,sBAAsB;IACtB,cAAc;IACd,eAAe;IACf,2BAA2B;IAC3B,uCAAuC;IACvC,iBAAiB;IACjB,gBAAgB;IAChB,cAAc;IACd,oBAAoB;IACpB,kBAAkB;IAClB,mCAAmC;IACnC,+BAA+B;IAC/B,8CAA8C;IAC9C,iDAAiD;IACjD,iBAAiB;IACjB,yBAAyB;IACzB,0BAA0B;AAC9B;;AAEA;IACI,yBAAyB;IACzB,YAAY;AAChB","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');\n\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n    text-decoration: none;\n    list-style: none;\n}\n\nbody {\n    font-family: 'Chakra Petch', sans-serif;\n}\n\nimg {\n    width: 45px;\n    height: 45px;\n}\n\n.game-title {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 50px;\n    text-decoration: underline;\n    margin-bottom: 1rem;\n}\n\n.main-container {\n    display: grid;\n    justify-content: center;\n}\n\ntd {\n    border: black solid 1px;\n    width: 25px;\n    height: 25px;\n}\n\ntr {\n    border: black solid 1px;\n}\n\n.carrier,\n.battleship,\n.destroyer,\n.submarine,\n.patrol-boat {\n    border: black 1px solid;\n    background-color: rgba(145, 145, 145, 0.685);\n    width: 20px;\n    height: 20px;\n}\n\n.player-miss,\n.comp-miss {\n    background-color: rgb(133, 255, 179);\n}\n\n.player-hit,\n.comp-hit {\n    background-color: rgb(255, 133, 133)\n}\n\n.player,\n.computer {\n    position: fixed;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    opacity: 0;\n    visibility: hidden;\n    transform: scale(1.1);\n    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;\n}\n\n.modal-content,\n.computer-modal-content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    background-color: white;\n    padding: 1rem 1.5rem;\n    width: 24rem;\n    border-radius: 0.5rem;\n}\n\n.close-button,\n.comp-close-button {\n    float: right;\n    width: 1.5rem;\n    line-height: 1.5rem;\n    text-align: center;\n    cursor: pointer;\n    border-radius: 0.25rem;\n    background-color: lightgray;\n}\n\n.close-button:hover {\n    background-color: darkgray;\n}\n\n.show-player,\n.show-computer {\n    opacity: 1;\n    visibility: visible;\n    transform: scale(1.0);\n    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;\n}\n\n#startBtn {\n    position: absolute;\n    transform: translate(-50%, -50%);\n    top: 50%;\n    left: 50%;\n}\n\n/* CSS */\n#startBtn {\n    background-color: #7df565;\n    border: 0 solid #e2e8f0;\n    box-sizing: border-box;\n    color: #0d172a;\n    cursor: pointer;\n    /* display: inline-block; */\n    font-family: 'Chakra Petch', sans-serif;\n    font-size: 1.1rem;\n    font-weight: 600;\n    line-height: 1;\n    padding: 1rem 5.7rem;\n    text-align: center;\n    text-decoration: none #0d172a solid;\n    text-decoration-thickness: auto;\n    transition: all .1s cubic-bezier(.4, 0, .2, 1);\n    box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);\n    user-select: none;\n    -webkit-user-select: none;\n    touch-action: manipulation;\n}\n\n#startBtn:hover {\n    background-color: #70e259;\n    color: black;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -508,114 +620,226 @@ module.exports = styleTagTransform;
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game */ "./src/game.js");
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
+/* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./game */ "./src/game.js");
 
 
-const playerContainer = document.querySelector(".player-container")
-const computerContainer = document.querySelector(".computer-container")
-// const shipContainer = document.querySelector(".ship-container")
-const compCells = document.getElementsByClassName("c-board-cell")
-const playerCells = document.getElementsByClassName("p-board-cell")
-
-const game = (0,_game__WEBPACK_IMPORTED_MODULE_0__["default"])()
-
-const createPlayerDisplay = () => {
-    const board = game.player.playerGameboard.getBoard()
-
-    for (let i = 0; i < board.length; i += 1) {
-        board[i] = []
-        for (let j = 0; j < board.length; j += 1) {
-            const cell = document.createElement("td")
-            cell.classList.add("p-board-cell")
-            cell.setAttribute("x", i)
-            cell.setAttribute("y", j)
-            board[i][j] = cell
-        }
-    }
-
-    for (let i = 0; i < 10; i += 1) {
-        const row = document.createElement("tr")
-        for (let j = 0; j < 10; j += 1) {
-            row.append(board[i][j])
-        }
-        row.classList.add("p-board-row")
-        playerContainer.append(row)
-    }
-}
-
-createPlayerDisplay()
-
-const createCompDisplay = () => {
-    const board = game.player.playerGameboard.getBoard()
-
-    for (let i = 0; i < board.length; i += 1) {
-        board[i] = []
-        for (let j = 0; j < board.length; j += 1) {
-            const cell = document.createElement("td")
-            cell.classList.add("c-board-cell")
-            cell.setAttribute("x", i)
-            cell.setAttribute("y", j)
-            board[i][j] = cell
-        }
-    }
-
-    for (let i = 0; i < 10; i += 1) {
-        const row = document.createElement("tr")
-        for (let j = 0; j < 10; j += 1) {
-            row.append(board[i][j])
-        }
-        row.classList.add("c-board-row")
-        computerContainer.append(row)
-    }
-}
-
-createCompDisplay()
 
 
-const displayPlayerAttk = () => {
-    for (let i = 0; i < compCells.length; i += 1) {
-        compCells[i].addEventListener("click", (e) => {
-            if (compCells[i].textContent.includes("true" || 0)) {
-                return false
+const displayGame = () => {
+    const computer = (0,_player__WEBPACK_IMPORTED_MODULE_0__.createComputer)()
+    const player = (0,_player__WEBPACK_IMPORTED_MODULE_0__.createPlayer)()
+    let isPlayersTurn = true
+
+    const playerContainer = document.querySelector(".player-container")
+    const computerContainer = document.querySelector(".computer-container")
+    const compCells = document.getElementsByClassName("c-board-cell")
+    const playerModal = document.querySelector(".player")
+    const closePlayerBtn = document.querySelector(".close-button")
+    const compModal = document.querySelector(".computer")
+    const closeCompButton = document.querySelector(".comp-close-button")
+    const startBtn = document.getElementById("startBtn")
+
+    const createPlayerDisplay = () => {
+        const playerBoard = player.playerGameboard.getBoard()
+
+        const carrier = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(5, "Carrier")
+        const battleship = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(4, "Battleship")
+        const destroyer = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "Destroyer")
+        const submarine = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "Submarine")
+        const patrolBoat = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(2, "Patrol Boat")
+
+        player.placeShipHorizontal(0, 2, carrier)
+        player.placeShipVertical(2, 5, battleship)
+        player.placeShipHorizontal(7, 0, destroyer)
+        player.placeShipVertical(3, 1, submarine)
+        player.placeShipVertical(8, 7, patrolBoat)
+
+        for (let i = 0; i < playerBoard.length; i += 1) {
+            playerBoard[i] = []
+            for (let j = 0; j < playerBoard.length; j += 1) {
+                const cell = document.createElement("td")
+                cell.classList.add("p-board-cell")
+                cell.dataset.x = i
+                cell.dataset.y = j
+                playerBoard[i][j] = cell
             }
-            const xPos = e.currentTarget.getAttribute("x")
-            const yPos = e.currentTarget.getAttribute("y")
-            compCells[i].textContent = game.player.sendAttack(xPos, yPos, game.computer)
+        }
+
+        playerBoard[0][2].classList.add("carrier")
+        playerBoard[0][3].classList.add("carrier")
+        playerBoard[0][4].classList.add("carrier")
+        playerBoard[0][5].classList.add("carrier")
+        playerBoard[0][6].classList.add("carrier")
+
+        playerBoard[2][5].classList.add("battleship")
+        playerBoard[3][5].classList.add("battleship")
+        playerBoard[4][5].classList.add("battleship")
+        playerBoard[5][5].classList.add("battleship")
+
+        playerBoard[7][0].classList.add("destroyer")
+        playerBoard[7][1].classList.add("destroyer")
+        playerBoard[7][2].classList.add("destroyer")
+
+        playerBoard[3][1].classList.add("submarine")
+        playerBoard[4][1].classList.add("submarine")
+        playerBoard[5][1].classList.add("submarine")
+
+        playerBoard[8][7].classList.add("patrol-boat")
+        playerBoard[9][7].classList.add("patrol-boat")
+
+        for (let i = 0; i < 10; i += 1) {
+            const row = document.createElement("tr")
+            for (let j = 0; j < 10; j += 1) {
+                row.append(playerBoard[i][j])
+            }
+            row.classList.add("p-board-row")
+            playerContainer.append(row)
+        }
+        player.grid = playerBoard
+    }
+
+    createPlayerDisplay()
+
+    const createCompDisplay = () => {
+        const compBoard = computer.computerGameboard.getBoard()
+
+        const carrier = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(5, "Carrier")
+        const battleship = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(4, "Battleship")
+        const destroyer = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "Destroyer")
+        const submarine = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "Submarine")
+        const patrolBoat = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(2, "Patrol Boat")
+
+        computer.placeShipHorizontal(carrier)
+        computer.placeShipVertical(battleship)
+        computer.placeShipHorizontal(destroyer)
+        computer.placeShipVertical(submarine)
+        computer.placeShipHorizontal(patrolBoat)
+
+        for (let i = 0; i < compBoard.length; i += 1) {
+            compBoard[i] = []
+            for (let j = 0; j < compBoard.length; j += 1) {
+                const cell = document.createElement("td")
+                cell.classList.add("c-board-cell")
+                cell.dataset.x = i
+                cell.dataset.y = j
+                compBoard[i][j] = cell
+            }
+        }
+
+        for (let i = 0; i < 10; i += 1) {
+            const row = document.createElement("tr")
+            for (let j = 0; j < 10; j += 1) {
+                row.append(compBoard[i][j])
+            }
+            row.classList.add("c-board-row")
+            computerContainer.append(row)
+        }
+        computer.grid = compBoard
+    }
+
+    createCompDisplay()
+
+    const togglePlayerModal = () => {
+        playerModal.classList.toggle("show-player")
+    }
+
+    const toggleCompModal = () => {
+        compModal.classList.toggle("show-computer")
+    }
+
+    const toggleStartGame = () => {
+        startBtn.style.visibility = "hidden"
+        ;(0,_game__WEBPACK_IMPORTED_MODULE_2__.startGameLoop)()
+
+
+    }
+
+    const playerWins = () => {
+        if (computer.computerGameboard.allSunk()) {
             return true
-        })
+        }
+        return false
+    }
+
+    const computerWins = () => {
+        if (player.playerGameboard.allSunk()) {
+            return true
+        }
+        return false
+    }
+
+    closePlayerBtn.addEventListener("click", togglePlayerModal)
+    closeCompButton.addEventListener("click", toggleCompModal)
+    startBtn.addEventListener("click", toggleStartGame)
+
+    const displayCompAttk = () => {
+        playerWins()
+        computerWins()
+
+        const result = computer.sendAttack(player)
+
+        if (isPlayersTurn === true) {
+            return false
+        }
+        if (result) {
+            const randomX = result[0]
+            const randomY = result[1]
+            const compResult = result[2]
+            if (compResult === false) {
+                player.grid[randomX][randomY].classList.add("comp-miss")
+            } else {
+                player.grid[randomX][randomY].classList.add("comp-hit")
+            }
+            isPlayersTurn = true
+            return true
+        }
+        return false
+    }
+    const displayPlayerAttk = () => {
+        playerWins()
+        computerWins()
+
+        for (let i = 0; i < compCells.length; i += 1) {
+            // eslint-disable-next-line no-loop-func
+            compCells[i].addEventListener("click", (e) => {
+                if (compCells[i].classList.value.includes("c-board-cell player-miss" || 0)) {
+                    return false
+                }
+                if (isPlayersTurn === false) {
+                    return false
+                }
+                const xPos = e.currentTarget.getAttribute("data-x")
+                const yPos = e.currentTarget.getAttribute("data-y")
+
+                if (player.sendAttack
+                    (Number(xPos), Number(yPos), computer) === true) {
+                    compCells[i].classList.add("player-hit")
+                }
+                if (player.sendAttack
+                    (Number(xPos), Number(yPos), computer) === false) {
+                    compCells[i].classList.add("player-miss")
+                }
+                isPlayersTurn = false
+                return true
+            })
+        }
+        return false
+    }
+
+    return {
+        createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer, toggleCompModal, togglePlayerModal, playerWins,
+        computerWins
     }
 }
 
-game.player.placeShipHorizontal(1, 2, game.carrier)
-game.computer.placeShipHorizontal(game.carrier)
-game.computer.placeShipVertical(game.battleship)
+const DOM = displayGame()
 
-const displayCompAttk = () => {
-    for (let i = 0; i < playerCells.length; i += 1) {
-        playerCells[i].textContent = game.computer.sendAttack(game.player)
-    }
-}
-
-
-displayCompAttk()
-displayPlayerAttk()
-
-// const carrierDisplay = () => {
-//     const carrier = createShip(5, "Carrier")
-//     const carrierDiv = document.createElement("div")
-//     carrierDiv.classList.add("carrier")
-//     carrierDiv.setAttribute("draggable", true)
-
-//     for (let i = 0; i < carrier.getLength(); i += 1) {
-//         const carrierCell = document.createElement("div")
-//         carrierCell.classList.add("carrier-cell")
-//         carrierCell.setAttribute("data-index", i)
-//         carrierDiv.append(carrierCell)
-//         shipContainer.append(carrierDiv)
-//     }
-// }
-
-// carrierDisplay()
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DOM);
 
 /***/ }),
 
@@ -627,28 +851,50 @@ displayPlayerAttk()
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   game: () => (/* binding */ game),
+/* harmony export */   startGameLoop: () => (/* binding */ startGameLoop)
 /* harmony export */ });
 /* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ "./src/player.js");
-/* harmony import */ var _ship__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ship */ "./src/ship.js");
+/* harmony import */ var _display__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./display */ "./src/display.js");
 
 
+// import createShip from "./ship"
 
 const createGame = () => {
     const player = (0,_player__WEBPACK_IMPORTED_MODULE_0__.createPlayer)("Player")
     const computer = (0,_player__WEBPACK_IMPORTED_MODULE_0__.createComputer)()
 
-    const carrier = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(5, "Carrier")
-    const battleship = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(4, "Battleship")
-    const destroyer = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "Destroyer")
-    const submarine = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(3, "Submarine")
-    const patrolBoat = (0,_ship__WEBPACK_IMPORTED_MODULE_1__["default"])(2, "Patrol Boat")
+    let isPlayersTurn = true
 
-    return { player, computer, carrier, battleship, destroyer, submarine, patrolBoat }
+    const playerTurn = () => {
+        if (isPlayersTurn) {
+            _display__WEBPACK_IMPORTED_MODULE_1__["default"].displayPlayerAttk()
+        } else {
+            _display__WEBPACK_IMPORTED_MODULE_1__["default"].displayCompAttk()
+        }
+        // Toggle true or false each turn
+        isPlayersTurn = !isPlayersTurn
+    }
+    return { player, computer, playerTurn }
 }
+const game = createGame()
 
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createGame);
+// Function to start the game loop
+const startGameLoop = () => {
+    const interval = setInterval(() => {
+        if (_display__WEBPACK_IMPORTED_MODULE_1__["default"].playerWins()) {
+            _display__WEBPACK_IMPORTED_MODULE_1__["default"].togglePlayerModal()
+            clearInterval(interval)
+        }
+        if (_display__WEBPACK_IMPORTED_MODULE_1__["default"].computerWins()) {
+            _display__WEBPACK_IMPORTED_MODULE_1__["default"].toggleCompModal()
+            clearInterval(interval)
+        }
+        game.playerTurn()
+    }, 1000)
+    return interval
+};
+// startGameLoop()
 
 
 
@@ -670,9 +916,7 @@ const Gameboard = () => {
     const board = []
     const missedCoord = []
     const shipArr = []
-    console.log(shipArr)
-    const attackCoord = []
-
+    const attackCoord = new Set()
     const getBoard = () => [...board]
 
     const Water = () => {
@@ -719,40 +963,36 @@ const Gameboard = () => {
         const shipsLength = ship.getLength()
 
         if (x + shipsLength > columns) {
-            console.log("Cannot place ship horizontally, out of bounds.");
             return false;
         }
         if (y + shipsLength > rows) {
-            console.log("Cannot place ship vertically, out of bounds.");
             return false;
         }
         return true
     }
+
     const doShipsCollide = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
+
         for (let i = 0; i < shipsLength; i += 1) {
             if (currentBoard[x][y + i].type !== "water") {
-                console.log("Ships cannot overlap!")
                 return false
             }
         }
         for (let i = 0; i < shipsLength; i += 1) {
             if (currentBoard[x + i][y].type !== "water") {
-                console.log("Ships cannot overlap!")
                 return false
             }
         }
         return true
     }
+
     const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
-
-        // Loop through ships length
         if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
             for (let i = 0; i < shipsLength; i += 1) {
-                // Change ship.name back to ship
                 currentBoard[x][y + i] = ship
                 shipArr.push(ship)
             }
@@ -760,14 +1000,13 @@ const Gameboard = () => {
         }
         return false
     }
+
     const placeVertical = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
 
-        // Loop through ships length
         if (validCoords(x, y) && shipIsInbounds(x, y, ship) && doShipsCollide(x, y, ship)) {
             for (let i = 0; i < shipsLength; i += 1) {
-                // Change ship.name back to ship
                 currentBoard[x + i][y] = ship
                 shipArr.push(ship)
             }
@@ -775,39 +1014,35 @@ const Gameboard = () => {
         }
         return false
     }
-    function canShipBeHitAgain(x, y) {
-        const coords = [x, y]
-        const coordStr = JSON.stringify(coords)
-        const attackCoordStr = JSON.stringify(attackCoord[0])
 
-        if (coordStr === attackCoordStr) {
-            console.log("Cannot hit same spot!")
+    function canShipBeHitAgain(x, y) {
+        const coordStr = JSON.stringify([x, y]);
+
+        if (attackCoord.has(coordStr)) {
+            return false;
+        }
+        attackCoord.add(coordStr);
+        return true;
+    }
+
+    function allSunk() {
+        if (shipArr.length === 0) {
             return false
         }
-        return true
+        return shipArr.every((ship) => ship.isSunk())
     }
+
     function receiveAttack(x, y) {
         const water = Water()
         const currentBoard = getBoard()
 
         if (canShipBeHitAgain(x, y) && validCoords(x, y) && currentBoard[x][y].hit()) {
-            console.log(`Hit at coordinates ${[x]},${[y]}`)
-            attackCoord.push([x, y])
+            attackCoord.add([x, y])
             return true
         }
         water.hit()
         missedCoord.push([x, y])
         return false
-    }
-    function allSunk() {
-        shipArr.every((ship) => {
-            if (!ship.isSunk()) {
-                console.log("All ships are not sunk.")
-                return false
-            }
-            return false
-        })
-        return true
     }
     return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide }
 }
@@ -849,17 +1084,35 @@ __webpack_require__.r(__webpack_exports__);
 
 const createComputer = () => {
     const computerGameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__["default"])()
+    const arrayOfCoords = []
+    const compAttkCoords = []
+    let counter = 0
+
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]
+        }
+    }
+
+    for (let i = 0; i < 10; i += 1) {
+        for (let j = 0; j < 10; j += 1) {
+            arrayOfCoords.push([i, j]);
+        }
+    }
+
+    shuffleArray(arrayOfCoords)
 
     const placeShipHorizontal = (ship) => {
-        let x;
-        let y;
+        let x
+        let y
         do {
-            x = Math.floor((Math.random() * 9));
-            y = Math.floor((Math.random() * 9));
+            x = Math.floor((Math.random() * 9))
+            y = Math.floor((Math.random() * 9))
         }
         while
-            (computerGameboard.placeHorizontal(x, y, ship) === false);
-        computerGameboard.placeHorizontal(x, y, ship)
+            (computerGameboard.placeHorizontal(x, y, ship) === false)
+        return true
     }
 
     const placeShipVertical = (ship) => {
@@ -871,28 +1124,30 @@ const createComputer = () => {
         }
         while
             (computerGameboard.placeVertical(x, y, ship) === false)
-        computerGameboard.placeVertical(x, y, ship)
+        return true
     }
 
     const setEnemyBoard = (player) => player.getPlayerBoard
 
     const sendAttack = (player) => {
-        let x
-        let y
-        do {
-            x = Math.floor((Math.random() * 9))
-            y = Math.floor((Math.random() * 9))
-        }
-        while (player.playerGameboard.receiveAttack(x, y))
-        return true
+        const randomXCoords = arrayOfCoords[counter][0]
+        const randomYCoords = arrayOfCoords[counter][1]
+
+        compAttkCoords.push([randomXCoords, randomYCoords])
+
+        const response = player.playerGameboard.receiveAttack(randomXCoords, randomYCoords)
+
+        counter += 1;
+
+        return [randomXCoords, randomYCoords, response]
     }
+
     return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack }
 }
 
 const createPlayer = (name) => {
     const getName = () => name
     const playerGameboard = (0,_gameboard__WEBPACK_IMPORTED_MODULE_0__["default"])()
-
     const placeShipHorizontal = (x, y, ship) => playerGameboard.placeHorizontal(x, y, ship)
 
     const placeShipVertical = (x, y, ship) => playerGameboard.placeVertical(x, y, ship)
@@ -903,6 +1158,7 @@ const createPlayer = (name) => {
 
     return { getName, placeShipHorizontal, placeShipVertical, setEnemyBoard, sendAttack, playerGameboard }
 }
+
 
 
 
@@ -932,16 +1188,18 @@ const createShip = (shipLength, name) => {
     }
 
     function isSunk() {
-        if (this.hits >= this.shipLength) {
+        if (this.hits === this.shipLength) {
             sunk = true
             return sunk
         }
         sunk = false
         return sunk
     }
-    return { getLength, hit, isSunk, shipLength, name, hits, }
+    return { getLength, hit, isSunk, shipLength, name, hits }
 }
 
+const testShip = createShip(2, "13213")
+testShip.hit()
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createShip);
 
 
