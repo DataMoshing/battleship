@@ -58,9 +58,11 @@ const Gameboard = () => {
         }
         return true
     }
+
     const doShipsCollide = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
+
         for (let i = 0; i < shipsLength; i += 1) {
             if (currentBoard[x][y + i].type !== "water") {
                 return false
@@ -73,6 +75,7 @@ const Gameboard = () => {
         }
         return true
     }
+
     const placeHorizontal = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
@@ -85,6 +88,7 @@ const Gameboard = () => {
         }
         return false
     }
+
     const placeVertical = (x, y, ship) => {
         const shipsLength = ship.getLength()
         const currentBoard = getBoard()
@@ -98,11 +102,11 @@ const Gameboard = () => {
         }
         return false
     }
+
     function canShipBeHitAgain(x, y) {
         const coordStr = JSON.stringify([x, y]);
 
         if (attackCoord.has(coordStr)) {
-            console.log("Cannot hit the same spot again!");
             return false;
         }
         attackCoord.add(coordStr);
@@ -119,6 +123,7 @@ const Gameboard = () => {
     function receiveAttack(x, y) {
         const water = Water()
         const currentBoard = getBoard()
+
         if (canShipBeHitAgain(x, y) && validCoords(x, y) && currentBoard[x][y].hit()) {
             attackCoord.add([x, y])
             return true
@@ -127,7 +132,7 @@ const Gameboard = () => {
         missedCoord.push([x, y])
         return false
     }
-    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide, attackCoord }
+    return { placeVertical, placeHorizontal, getBoard, cellCount, receiveAttack, allSunk, canShipBeHitAgain, validCoords, shipIsInbounds, doShipsCollide }
 }
 
 export default Gameboard
