@@ -1,11 +1,11 @@
 import createShip from "../ship"
 
 describe("Ship factory", () => {
-    test("should hit ship", () => {
+    test("Can hit ship", () => {
         const testShip = createShip(3, "Boat")
         expect(testShip.hit()).toBe(1)
     })
-    test("length of ship", () => {
+    test("Length of ship", () => {
         const testShip = createShip(3, "Boat")
         expect(testShip.getLength(3)).toBe(3)
     })
