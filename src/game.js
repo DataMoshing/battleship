@@ -36,7 +36,6 @@ const startGameLoop = () => {
     }, 1000)
     return interval
 };
+// startGameLoop()
 
-startGameLoop()
-
-export default game
+export { game, startGameLoop }
