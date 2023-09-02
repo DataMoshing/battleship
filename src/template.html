@@ -12,21 +12,29 @@
 
 <body>
     <header>
-        <h1 class="title">Battleship</h1>
+        <h1 class="game-title">Battleship</h1>
     </header>
     <main>
-        <div class="main-container">
-            <h1 class="computer-header">Player</h1>
-            <table class="player-container"></table>
-            <h1 class="computer-header">Computer</h1>
-            <table class="computer-container"></table>
-            <div class="ship-container">
-                <!-- <div class="carrier"></div>
-                <div class="battleship"></div>
-                <div class="destroyer"></div>
-                <div class="submarine"></div>
-                <div class="patrol-boat"></div> -->
+        <div class="player">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h1>You win! 🎉</h1>
             </div>
+        </div>
+        <div class="computer">
+            <div class="computer-modal-content">
+                <span class="comp-close-button">&times;</span>
+                <h1>You lose! 🎉</h1>
+            </div>
+        </div>
+        <div class="main-container">
+            <h1 class="player-header">Player
+                <table class="player-container"></table>
+            </h1>
+            <h1 class="computer-header">Computer
+                <table class="computer-container"></table>
+            </h1>
+            <div class="ship-container"></div>
         </div>
     </main>
 </body>
