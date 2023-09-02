@@ -24,7 +24,12 @@ const game = createGame()
 // Function to start the game loop
 const startGameLoop = () => {
     const interval = setInterval(() => {
-        if (DOM.displayWinner()) {
+        if (DOM.playerWins()) {
+            DOM.togglePlayerModal()
+            clearInterval(interval)
+        }
+        if (DOM.computerWins()) {
+            DOM.toggleCompModal()
             clearInterval(interval)
         }
         game.playerTurn()
@@ -32,6 +37,6 @@ const startGameLoop = () => {
     return interval
 };
 
-// startGameLoop()
+startGameLoop()
 
 export default game
