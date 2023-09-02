@@ -122,23 +122,27 @@ const displayGame = () => {
         compModal.classList.toggle("show-computer")
     }
 
-    const gameOver = () => {
+    const playerWins = () => {
         if (computer.computerGameboard.allSunk()) {
-            togglePlayerModal()
-            return true
-        }
-        if (player.playerGameboard.allSunk()) {
-            toggleCompModal()
             return true
         }
         return false
     }
 
+    const computerWins = () => {
+        if (player.playerGameboard.allSunk()) {
+            return true
+        }
+        return false
+    }
+
+
     closePlayerBtn.addEventListener("click", togglePlayerModal)
     closeCompButton.addEventListener("click", toggleCompModal)
 
     const displayCompAttk = () => {
-        gameOver()
+        playerWins()
+        computerWins()
 
         const result = computer.sendAttack(player)
 
@@ -160,7 +164,8 @@ const displayGame = () => {
         return false
     }
     const displayPlayerAttk = () => {
-        gameOver()
+        playerWins()
+        computerWins()
 
         for (let i = 0; i < compCells.length; i += 1) {
             // eslint-disable-next-line no-loop-func
@@ -189,7 +194,10 @@ const displayGame = () => {
         return false
     }
 
-    return { createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer, gameOver }
+    return {
+        createPlayerDisplay, createCompDisplay, displayCompAttk, displayPlayerAttk, player, computer, playerContainer, toggleCompModal, togglePlayerModal, playerWins,
+        computerWins
+    }
 }
 
 const DOM = displayGame()
