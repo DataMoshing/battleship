@@ -1,5 +1,6 @@
 import { createComputer, createPlayer } from "./player"
 import createShip from "./ship"
+import { startGameLoop } from "./game"
 
 const displayGame = () => {
     const computer = createComputer()
@@ -13,6 +14,7 @@ const displayGame = () => {
     const closePlayerBtn = document.querySelector(".close-button")
     const compModal = document.querySelector(".computer")
     const closeCompButton = document.querySelector(".comp-close-button")
+    const startBtn = document.getElementById("startBtn")
 
     const createPlayerDisplay = () => {
         const playerBoard = player.playerGameboard.getBoard()
@@ -122,6 +124,13 @@ const displayGame = () => {
         compModal.classList.toggle("show-computer")
     }
 
+    const toggleStartGame = () => {
+        startBtn.style.visibility = "hidden"
+        startGameLoop()
+
+
+    }
+
     const playerWins = () => {
         if (computer.computerGameboard.allSunk()) {
             return true
@@ -136,9 +145,9 @@ const displayGame = () => {
         return false
     }
 
-
     closePlayerBtn.addEventListener("click", togglePlayerModal)
     closeCompButton.addEventListener("click", toggleCompModal)
+    startBtn.addEventListener("click", toggleStartGame)
 
     const displayCompAttk = () => {
         playerWins()
