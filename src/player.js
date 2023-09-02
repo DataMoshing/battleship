@@ -2,7 +2,6 @@ import Gameboard from "./gameboard"
 
 const createComputer = () => {
     const computerGameboard = Gameboard()
-    console.log(computerGameboard.getBoard())
     const arrayOfCoords = []
     const compAttkCoords = []
     let counter = 0
@@ -34,7 +33,6 @@ const createComputer = () => {
         return true
     }
 
-
     const placeShipVertical = (ship) => {
         let x
         let y
@@ -62,7 +60,7 @@ const createComputer = () => {
         return [randomXCoords, randomYCoords, response]
     }
 
-    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack, }
+    return { computerGameboard, setEnemyBoard, placeShipHorizontal, placeShipVertical, sendAttack }
 }
 
 const createPlayer = (name) => {
@@ -78,5 +76,6 @@ const createPlayer = (name) => {
 
     return { getName, placeShipHorizontal, placeShipVertical, setEnemyBoard, sendAttack, playerGameboard }
 }
+
 
 export { createComputer, createPlayer }
