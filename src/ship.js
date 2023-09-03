@@ -22,7 +22,5 @@ const createShip = (shipLength, name) => {
     return { getLength, hit, isSunk, shipLength, name, hits }
 }
 
-const testShip = createShip(2, "13213")
-testShip.hit()
 export default createShip
 

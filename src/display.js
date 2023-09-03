@@ -127,8 +127,6 @@ const displayGame = () => {
     const toggleStartGame = () => {
         startBtn.style.visibility = "hidden"
         startGameLoop()
-
-
     }
 
     const playerWins = () => {
