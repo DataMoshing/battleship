@@ -34,18 +34,14 @@ body {
     font-family: 'Chakra Petch', sans-serif;
 }
 
-img {
-    width: 45px;
-    height: 45px;
-}
-
 .game-title {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 50px;
     text-decoration: underline;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
 .main-container {
@@ -140,14 +136,12 @@ tr {
     left: 50%;
 }
 
-/* CSS */
 #startBtn {
     background-color: #7df565;
     border: 0 solid #e2e8f0;
     box-sizing: border-box;
     color: #0d172a;
     cursor: pointer;
-    /* display: inline-block; */
     font-family: 'Chakra Petch', sans-serif;
     font-size: 1.1rem;
     font-weight: 600;
@@ -166,7 +160,7 @@ tr {
 #startBtn:hover {
     background-color: #70e259;
     color: black;
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAEA;IACI,SAAS;IACT,UAAU;IACV,sBAAsB;IACtB,qBAAqB;IACrB,gBAAgB;AACpB;;AAEA;IACI,uCAAuC;AAC3C;;AAEA;IACI,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,eAAe;IACf,0BAA0B;IAC1B,mBAAmB;AACvB;;AAEA;IACI,aAAa;IACb,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;IACvB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;;;;;IAKI,uBAAuB;IACvB,4CAA4C;IAC5C,WAAW;IACX,YAAY;AAChB;;AAEA;;IAEI,oCAAoC;AACxC;;AAEA;;IAEI;AACJ;;AAEA;;IAEI,eAAe;IACf,OAAO;IACP,MAAM;IACN,WAAW;IACX,YAAY;IACZ,oCAAoC;IACpC,UAAU;IACV,kBAAkB;IAClB,qBAAqB;IACrB,yEAAyE;AAC7E;;AAEA;;IAEI,kBAAkB;IAClB,QAAQ;IACR,SAAS;IACT,gCAAgC;IAChC,uBAAuB;IACvB,oBAAoB;IACpB,YAAY;IACZ,qBAAqB;AACzB;;AAEA;;IAEI,YAAY;IACZ,aAAa;IACb,mBAAmB;IACnB,kBAAkB;IAClB,eAAe;IACf,sBAAsB;IACtB,2BAA2B;AAC/B;;AAEA;IACI,0BAA0B;AAC9B;;AAEA;;IAEI,UAAU;IACV,mBAAmB;IACnB,qBAAqB;IACrB,sEAAsE;AAC1E;;AAEA;IACI,kBAAkB;IAClB,gCAAgC;IAChC,QAAQ;IACR,SAAS;AACb;;AAEA,QAAQ;AACR;IACI,yBAAyB;IACzB,uBAAuB;IACvB,sBAAsB;IACtB,cAAc;IACd,eAAe;IACf,2BAA2B;IAC3B,uCAAuC;IACvC,iBAAiB;IACjB,gBAAgB;IAChB,cAAc;IACd,oBAAoB;IACpB,kBAAkB;IAClB,mCAAmC;IACnC,+BAA+B;IAC/B,8CAA8C;IAC9C,iDAAiD;IACjD,iBAAiB;IACjB,yBAAyB;IACzB,0BAA0B;AAC9B;;AAEA;IACI,yBAAyB;IACzB,YAAY;AAChB","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');\n\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n    text-decoration: none;\n    list-style: none;\n}\n\nbody {\n    font-family: 'Chakra Petch', sans-serif;\n}\n\nimg {\n    width: 45px;\n    height: 45px;\n}\n\n.game-title {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 50px;\n    text-decoration: underline;\n    margin-bottom: 1rem;\n}\n\n.main-container {\n    display: grid;\n    justify-content: center;\n}\n\ntd {\n    border: black solid 1px;\n    width: 25px;\n    height: 25px;\n}\n\ntr {\n    border: black solid 1px;\n}\n\n.carrier,\n.battleship,\n.destroyer,\n.submarine,\n.patrol-boat {\n    border: black 1px solid;\n    background-color: rgba(145, 145, 145, 0.685);\n    width: 20px;\n    height: 20px;\n}\n\n.player-miss,\n.comp-miss {\n    background-color: rgb(133, 255, 179);\n}\n\n.player-hit,\n.comp-hit {\n    background-color: rgb(255, 133, 133)\n}\n\n.player,\n.computer {\n    position: fixed;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    opacity: 0;\n    visibility: hidden;\n    transform: scale(1.1);\n    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;\n}\n\n.modal-content,\n.computer-modal-content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    background-color: white;\n    padding: 1rem 1.5rem;\n    width: 24rem;\n    border-radius: 0.5rem;\n}\n\n.close-button,\n.comp-close-button {\n    float: right;\n    width: 1.5rem;\n    line-height: 1.5rem;\n    text-align: center;\n    cursor: pointer;\n    border-radius: 0.25rem;\n    background-color: lightgray;\n}\n\n.close-button:hover {\n    background-color: darkgray;\n}\n\n.show-player,\n.show-computer {\n    opacity: 1;\n    visibility: visible;\n    transform: scale(1.0);\n    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;\n}\n\n#startBtn {\n    position: absolute;\n    transform: translate(-50%, -50%);\n    top: 50%;\n    left: 50%;\n}\n\n/* CSS */\n#startBtn {\n    background-color: #7df565;\n    border: 0 solid #e2e8f0;\n    box-sizing: border-box;\n    color: #0d172a;\n    cursor: pointer;\n    /* display: inline-block; */\n    font-family: 'Chakra Petch', sans-serif;\n    font-size: 1.1rem;\n    font-weight: 600;\n    line-height: 1;\n    padding: 1rem 5.7rem;\n    text-align: center;\n    text-decoration: none #0d172a solid;\n    text-decoration-thickness: auto;\n    transition: all .1s cubic-bezier(.4, 0, .2, 1);\n    box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);\n    user-select: none;\n    -webkit-user-select: none;\n    touch-action: manipulation;\n}\n\n#startBtn:hover {\n    background-color: #70e259;\n    color: black;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAEA;IACI,SAAS;IACT,UAAU;IACV,sBAAsB;IACtB,qBAAqB;IACrB,gBAAgB;AACpB;;AAEA;IACI,uCAAuC;AAC3C;;AAEA;IACI,aAAa;IACb,mBAAmB;IACnB,uBAAuB;IACvB,eAAe;IACf,0BAA0B;IAC1B,mBAAmB;IACnB,gBAAgB;AACpB;;AAEA;IACI,aAAa;IACb,uBAAuB;AAC3B;;AAEA;IACI,uBAAuB;IACvB,WAAW;IACX,YAAY;AAChB;;AAEA;IACI,uBAAuB;AAC3B;;AAEA;;;;;IAKI,uBAAuB;IACvB,4CAA4C;IAC5C,WAAW;IACX,YAAY;AAChB;;AAEA;;IAEI,oCAAoC;AACxC;;AAEA;;IAEI;AACJ;;AAEA;;IAEI,eAAe;IACf,OAAO;IACP,MAAM;IACN,WAAW;IACX,YAAY;IACZ,oCAAoC;IACpC,UAAU;IACV,kBAAkB;IAClB,qBAAqB;IACrB,yEAAyE;AAC7E;;AAEA;;IAEI,kBAAkB;IAClB,QAAQ;IACR,SAAS;IACT,gCAAgC;IAChC,uBAAuB;IACvB,oBAAoB;IACpB,YAAY;IACZ,qBAAqB;AACzB;;AAEA;;IAEI,YAAY;IACZ,aAAa;IACb,mBAAmB;IACnB,kBAAkB;IAClB,eAAe;IACf,sBAAsB;IACtB,2BAA2B;AAC/B;;AAEA;IACI,0BAA0B;AAC9B;;AAEA;;IAEI,UAAU;IACV,mBAAmB;IACnB,qBAAqB;IACrB,sEAAsE;AAC1E;;AAEA;IACI,kBAAkB;IAClB,gCAAgC;IAChC,QAAQ;IACR,SAAS;AACb;;AAEA;IACI,yBAAyB;IACzB,uBAAuB;IACvB,sBAAsB;IACtB,cAAc;IACd,eAAe;IACf,uCAAuC;IACvC,iBAAiB;IACjB,gBAAgB;IAChB,cAAc;IACd,oBAAoB;IACpB,kBAAkB;IAClB,mCAAmC;IACnC,+BAA+B;IAC/B,8CAA8C;IAC9C,iDAAiD;IACjD,iBAAiB;IACjB,yBAAyB;IACzB,0BAA0B;AAC9B;;AAEA;IACI,yBAAyB;IACzB,YAAY;AAChB","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap');\n\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n    text-decoration: none;\n    list-style: none;\n}\n\nbody {\n    font-family: 'Chakra Petch', sans-serif;\n}\n\n.game-title {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 50px;\n    text-decoration: underline;\n    margin-bottom: 2rem;\n    margin-top: 2rem;\n}\n\n.main-container {\n    display: grid;\n    justify-content: center;\n}\n\ntd {\n    border: black solid 1px;\n    width: 25px;\n    height: 25px;\n}\n\ntr {\n    border: black solid 1px;\n}\n\n.carrier,\n.battleship,\n.destroyer,\n.submarine,\n.patrol-boat {\n    border: black 1px solid;\n    background-color: rgba(145, 145, 145, 0.685);\n    width: 20px;\n    height: 20px;\n}\n\n.player-miss,\n.comp-miss {\n    background-color: rgb(133, 255, 179);\n}\n\n.player-hit,\n.comp-hit {\n    background-color: rgb(255, 133, 133)\n}\n\n.player,\n.computer {\n    position: fixed;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    opacity: 0;\n    visibility: hidden;\n    transform: scale(1.1);\n    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;\n}\n\n.modal-content,\n.computer-modal-content {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    background-color: white;\n    padding: 1rem 1.5rem;\n    width: 24rem;\n    border-radius: 0.5rem;\n}\n\n.close-button,\n.comp-close-button {\n    float: right;\n    width: 1.5rem;\n    line-height: 1.5rem;\n    text-align: center;\n    cursor: pointer;\n    border-radius: 0.25rem;\n    background-color: lightgray;\n}\n\n.close-button:hover {\n    background-color: darkgray;\n}\n\n.show-player,\n.show-computer {\n    opacity: 1;\n    visibility: visible;\n    transform: scale(1.0);\n    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;\n}\n\n#startBtn {\n    position: absolute;\n    transform: translate(-50%, -50%);\n    top: 50%;\n    left: 50%;\n}\n\n#startBtn {\n    background-color: #7df565;\n    border: 0 solid #e2e8f0;\n    box-sizing: border-box;\n    color: #0d172a;\n    cursor: pointer;\n    font-family: 'Chakra Petch', sans-serif;\n    font-size: 1.1rem;\n    font-weight: 600;\n    line-height: 1;\n    padding: 1rem 5.7rem;\n    text-align: center;\n    text-decoration: none #0d172a solid;\n    text-decoration-thickness: auto;\n    transition: all .1s cubic-bezier(.4, 0, .2, 1);\n    box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);\n    user-select: none;\n    -webkit-user-select: none;\n    touch-action: manipulation;\n}\n\n#startBtn:hover {\n    background-color: #70e259;\n    color: black;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -755,8 +749,6 @@ const displayGame = () => {
     const toggleStartGame = () => {
         startBtn.style.visibility = "hidden"
         ;(0,_game__WEBPACK_IMPORTED_MODULE_2__.startGameLoop)()
-
-
     }
 
     const playerWins = () => {
@@ -1198,8 +1190,6 @@ const createShip = (shipLength, name) => {
     return { getLength, hit, isSunk, shipLength, name, hits }
 }
 
-const testShip = createShip(2, "13213")
-testShip.hit()
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createShip);
 
 
